@@ -5,43 +5,43 @@ import java.util.Set;
 
 public class TestBoardCell {
 
+	private int row, col;
+	private Boolean isRoom, isOccupied;
+	
+	private Set<TestBoardCell> adjList;
+	
 	// Parameterized constructor - sets up cell at location row, column
-	// TODO: implement
 	public TestBoardCell(int row, int col) {
 		super();
+		this.row = row;
+		this.col = col;
+		adjList = new HashSet<TestBoardCell>();
 	}
 	
 	// addAdjacency - setter that adds a cell to the adjacency list
-	// TODO: implement
 	public void addAdjacency(TestBoardCell cell) {
-		
+		adjList.add(cell);
 	}
 	
-	// TODO: implement
 	public Set<TestBoardCell> getAdjList(){
-		return new HashSet<TestBoardCell>();
-		
+		return adjList;
 	}
 	
-	// TODO: implement
 	public void setRoom(boolean room) {
-		
+		isRoom = room;
 	}
 	
 	// Checks to see if the cell is in a room
-	// TODO: implement
 	public boolean isRoom() {
-		return false;
+		return isRoom;
 	}
 	
-	// TODO: implement
 	public void setOccupied(boolean occupied) {
-		
+		isOccupied = occupied;
 	}
 	
-	// TODO: implement
 	public boolean getOccupied() {
-		return false;
+		return isOccupied;
 	}
 
 }
