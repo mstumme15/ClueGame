@@ -44,19 +44,50 @@ public class TestBoard {
 	}
 	
 	// calcTargets - calculates legal move targets given the starting cell and the path length
-	// TODO: implement
 	public void calcTargets(TestBoardCell startCell, int pathLength) {
+		visited = new HashSet<TestBoardCell>();
+		targets = new HashSet<TestBoardCell>();
+		
+		visited.add(startCell);
+		findTargets(startCell, pathLength);
+		
+	}
+	
+	// findTargets - recursive algorithm that finds all the targets
+	public void findTargets(TestBoardCell thisCell, int numSteps) {
+		
+		for (TestBoardCell adjCell : thisCell.getAdjList()) {
+			if(visited.contains(adjCell)) {
+				continue;
+			}
+			else if(adjCell.getOccupied()){
+				continue;
+			}
+			else if(adjCell.isRoom()) {
+				targets.add(adjCell);
+				visited.remove(adjCell);
+			}
+			else {
+				visited.add(adjCell);
+				if(numSteps == 1) {
+					targets.add(adjCell);
+				}
+				else {
+					findTargets(adjCell, numSteps-1);
+					}
+				
+				visited.remove(adjCell);
+			}
+		}
 		
 	}
 	
 	// getTargets - getter for values calculated in calcTargets
-	// TODO: implement
 	public Set<TestBoardCell> getTargets() {
-		return new HashSet<TestBoardCell>();
+		return targets;
 	}
 	
 	// getCell - getter that returns the cell at location of row, column
-	// TODO: implement
 	public TestBoardCell getCell(int row, int column) {
 		return grid[row][column];
 	}

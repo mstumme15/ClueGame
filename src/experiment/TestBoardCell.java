@@ -6,8 +6,9 @@ import java.util.Set;
 public class TestBoardCell {
 
 	private int row, col;
-	private Boolean isRoom, isOccupied;
+	private Boolean isRoom = false, isOccupied = false;
 	
+
 	private Set<TestBoardCell> adjList;
 	
 	// Parameterized constructor - sets up cell at location row, column
