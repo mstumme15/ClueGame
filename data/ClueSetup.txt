@@ -1,0 +1,14 @@
+// Rooms and room cards
+Room, Bedroom, B
+Room, Office, O
+Room, Kitchen, K
+Room, Living Room, L
+Room, Theater Room, T
+Room, Laundry Room, N
+Room, Game Room, A
+Room, Sun room, S
+Room, Green Room, G
+
+// Other spaces on board
+Space, Unused, X
+Space, Walkway, W
