@@ -6,7 +6,7 @@ Room, Living Room, L
 Room, Theater Room, T
 Room, Laundry Room, N
 Room, Game Room, A
-Room, Sun room, S
+Room, Sun Room, S
 Room, Green Room, G
 
 // Other spaces on board
