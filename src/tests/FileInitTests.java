@@ -97,5 +97,70 @@ class FileInitTests {
 			}
 		Assert.assertEquals(NUM_DOORS, numDoors);
 	}
+	
+	// Test that each cell initial is correct
+	@Test
+	public void testCellInitial() {
+		// Test rooms
+		assertEquals('B', board.getCell(1, 2).getInitial());
+		assertEquals('O', board.getCell(1, 7).getInitial());
+		assertEquals('L', board.getCell(0, 19).getInitial());
+		assertEquals('T', board.getCell(13, 4).getInitial());
+		assertEquals('A', board.getCell(8, 23).getInitial());
+		assertEquals('G', board.getCell(22, 3).getInitial());
+		assertEquals('S', board.getCell(24, 11).getInitial());
+		assertEquals('K', board.getCell(25, 24).getInitial());
+
+		// Test unusable spaces
+		assertEquals('X', board.getCell(15, 11).getInitial());
+		assertEquals('X', board.getCell(25, 3).getInitial());
+		
+		// Test walkways
+		assertEquals('W', board.getCell(14, 8).getInitial());
+		assertEquals('W', board.getCell(5, 14).getInitial());
+		assertEquals('W', board.getCell(20, 18).getInitial());
+		assertEquals('W', board.getCell(19, 6).getInitial());
+		assertEquals('W', board.getCell(13, 20).getInitial());
+}
+	
+	// Test to see if the rooms have the correct center and label cell locations
+	@Test
+	public void testCenterLabelCells() {
+		// Bedroom
+		assertTrue(board.getCell(1, 1).isLabel());
+		assertTrue(board.getCell(2, 1).isRoomCenter());
+		
+		// Office
+		assertTrue(board.getCell(1, 7).isLabel());
+		assertTrue(board.getCell(2, 8).isRoomCenter());
+		
+		// Kitchen
+		assertTrue(board.getCell(21, 20).isLabel());
+		assertTrue(board.getCell(22, 21).isRoomCenter());
+		
+		// Living Room
+		assertTrue(board.getCell(1, 16).isLabel());
+		assertTrue(board.getCell(2, 18).isRoomCenter());
+		
+		// Theater
+		assertTrue(board.getCell(10, 2).isLabel());
+		assertTrue(board.getCell(11, 2).isRoomCenter());
+		
+		// Laundry Room
+		assertTrue(board.getCell(14, 22).isLabel());
+		assertTrue(board.getCell(15, 22).isRoomCenter());
+		
+		// Game Room
+		assertTrue(board.getCell(8, 20).isLabel());
+		assertTrue(board.getCell(9, 21).isRoomCenter());
+		
+		// Sun Room
+		assertTrue(board.getCell(21, 8).isLabel());
+		assertTrue(board.getCell(22, 9).isRoomCenter());
+		
+		// Green Room
+		assertTrue(board.getCell(21, 3).isLabel());
+		assertTrue(board.getCell(22, 2).isRoomCenter());
+	}
 
 }
