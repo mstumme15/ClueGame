@@ -4,6 +4,7 @@ import java.util.Set;
 
 public class BoardCell {
 	
+	// Instance variables
 	private int row;
 	private int col;
 	private char initial;
@@ -14,10 +15,12 @@ public class BoardCell {
 	private Set<BoardCell> adjList;
 	
 
+	// Default constructor
 	public BoardCell() {
 		super();
 	}
 	
+	// Parameterized constructor - sets row, cell, and initial
 	public BoardCell(int row, int col, char initial) {
 		super();
 		this.row = row;
@@ -25,10 +28,13 @@ public class BoardCell {
 		this.initial = initial;
 	}
 	
+	// Adds cell to instance's adjacency list
 	public void addAdj(BoardCell adj) {
 		
 	}
 	
+	
+	// Getters and setters
 	public boolean isDoorway() {
 		if (doorDirection == DoorDirection.NONE) {
 			return false;

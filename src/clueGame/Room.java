@@ -1,14 +1,18 @@
 package clueGame;
 
 public class Room {
+	
+	// Instance variables
 	private String name;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
 	
+	// Default constructor
 	public Room(){
 		
 	}
 	
+	// Getters and setters
 	public String getName() {
 		return name;
 	}

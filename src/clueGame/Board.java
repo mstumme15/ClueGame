@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 
 public class Board {
+	
+	// Instance variables
 	private BoardCell[][] grid;
 	private int numRows;
 	private int numColumns;
@@ -17,37 +19,52 @@ public class Board {
 	private Map<Character, Room> roomMap = new HashMap<Character, Room>();
 	private static Board theInstance = new Board();
 	
+	// Default constructor - private because of singleton pattern
 	private Board() {
 		super();
 	}
 	
+	// getInstance - sets up the one board instance
 	public static Board getInstance() {
 		return theInstance;
 	}
 	
 	// Initializes the board
 	public void initialize() {
-		loadSetupConfig();
-		loadLayoutConfig();
+		try {
+			loadSetupConfig();
+		} catch (BadConfigFormatException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		try {
+			loadLayoutConfig();
+		} catch (BadConfigFormatException e) {
+			System.out.println(e.getMessage());
+		}
 		
 	}
 	
 	// Loads the setup file and creates the roomMap
-	public void loadSetupConfig() {
+	public void loadSetupConfig() throws BadConfigFormatException {
 		try {
-			File setup = new File("data/" + setupConfigFile);
+			File setup = new File("data/" + setupConfigFile); // Read in file
 			Scanner mySetup = new Scanner(setup);
 			while(mySetup.hasNextLine()) {
 				String[] line = mySetup.nextLine().split(",");
-			
-				if (line[0].equals("Room") || line[0].equals("Space")) {
+				
+				if (line[0].equals("Room") || line[0].equals("Space")) { // Sets up rooms
 					Room room = new Room();
 					room.setName(line[1].substring(1));
 					char character = line[2].charAt(1);
 					roomMap.put(character, room);
+				} else if (!line[0].equals("")) { // Throws exception if room type is wrong
+					 if (!line[0].substring(0, 2).equals("//")) {
+						 throw new BadConfigFormatException(setupConfigFile, "room type");
+					 }
 				}
-				
 			}
+			mySetup.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -55,15 +72,16 @@ public class Board {
 	}
 	
 	// Loads the layout file and creates the grid
-	public void loadLayoutConfig() {
+	public void loadLayoutConfig() throws BadConfigFormatException {
 		ArrayList<String[]> lines = new ArrayList<String[]>();
 		try {
-			File layout = new File("data/" +layoutConfig);
+			File layout = new File("data/" +layoutConfig); // Loads in file
 			Scanner myLayout = new Scanner(layout);
 			while(myLayout.hasNextLine()) {
-				String[] line = myLayout.nextLine().split(",");
+				String[] line = myLayout.nextLine().split(","); // Splits line into array of strings
 				lines.add(line);
 			}
+			myLayout.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -76,8 +94,22 @@ public class Board {
 		grid = new BoardCell[numRows][numColumns];
 		for (int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numColumns; j++) {
+				
+				// Throws exception if number of columns is inconsistent
+				if (lines.get(i).length != numColumns) {
+					throw new BadConfigFormatException(layoutConfig, "column");
+				}
+				
+				// Creates cell
 				String initial = lines.get(i)[j];
 				BoardCell cell = new BoardCell(i,j,initial.charAt(0));
+				
+				// Throws exception if the cell contains an initial not tied to a room
+				if (roomMap.containsKey(cell.getInitial()) == false) {
+					throw new BadConfigFormatException(layoutConfig, "room");
+				}
+				
+				// Sets up door direction
 				if (initial.length() > 1) {
 					if (initial.charAt(1) == '>'){
 						cell.setDoorDirection(DoorDirection.RIGHT);
@@ -105,6 +137,8 @@ public class Board {
 						cell.setSecretPassage(initial.charAt(1));
 					}
 					
+				} else {
+					cell.setDoorDirection(DoorDirection.NONE);
 				}
 				grid[i][j] = cell;
 			}
@@ -112,6 +146,7 @@ public class Board {
 		
 	}
 	
+	// Getters and setters
 	public void setConfigFiles(String layout, String setup) {
 		layoutConfig = layout;
 		setupConfigFile = setup;
