@@ -50,16 +50,21 @@ public class Board {
 		try {
 			File setup = new File("data/" + setupConfigFile); // Read in file
 			Scanner mySetup = new Scanner(setup);
-			while(mySetup.hasNextLine()) {
+			
+			while (mySetup.hasNextLine()) {
 				String[] line = mySetup.nextLine().split(",");
 				
 				if (line[0].equals("Room") || line[0].equals("Space")) { // Sets up rooms
 					Room room = new Room();
-					room.setName(line[1].substring(1));
+					String roomName = line[1].substring(1);
+					room.setName(roomName);
 					char character = line[2].charAt(1);
 					roomMap.put(character, room);
+					
 				} else if (!line[0].equals("")) { // Throws exception if room type is wrong
-					 if (!line[0].substring(0, 2).equals("//")) {
+					 String firstTwoChar = line[0].substring(0, 2);
+					 
+					if (!firstTwoChar.equals("//")) {
 						 throw new BadConfigFormatException(setupConfigFile, "room type");
 					 }
 				}
@@ -96,7 +101,8 @@ public class Board {
 			for(int j = 0; j < numColumns; j++) {
 				
 				// Throws exception if number of columns is inconsistent
-				if (lines.get(i).length != numColumns) {
+				int rowLength = lines.get(i).length;
+				if (rowLength != numColumns) {
 					throw new BadConfigFormatException(layoutConfig, "column");
 				}
 				
@@ -105,7 +111,8 @@ public class Board {
 				BoardCell cell = new BoardCell(i,j,initial.charAt(0));
 				
 				// Throws exception if the cell contains an initial not tied to a room
-				if (roomMap.containsKey(cell.getInitial()) == false) {
+				char cellInitial = cell.getInitial();
+				if (roomMap.containsKey(cellInitial) == false) {
 					throw new BadConfigFormatException(layoutConfig, "room");
 				}
 				
@@ -124,12 +131,12 @@ public class Board {
 						cell.setDoorDirection(DoorDirection.DOWN);
 					}
 					else if (initial.charAt(1) == '#'){
-						Room room = theInstance.getRoom(initial.charAt(0));
+						Room room = theInstance.getRoom(cellInitial);
 						room.setLabelCell(cell);
 						cell.setRoomLabel(true);
 					}
 					else if (initial.charAt(1) == '*'){
-						Room room = theInstance.getRoom(initial.charAt(0));
+						Room room = theInstance.getRoom(cellInitial);
 						room.setCenterCell(cell);
 						cell.setRoomCenter(true);
 					}
