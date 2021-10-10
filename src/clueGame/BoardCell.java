@@ -13,6 +13,7 @@ public class BoardCell {
 	private boolean roomCenter = false;
 	private char secretPassage;
 	private Set<BoardCell> adjList;
+	private boolean occupied = false;
 	
 
 	// Default constructor
@@ -82,5 +83,13 @@ public class BoardCell {
 
 	public void setSecretPassage(char secretPassage) {
 		this.secretPassage = secretPassage;
+	}
+	
+	public void setOccupied(boolean occupied) {
+		this.occupied = occupied;
+	}
+	
+	public boolean getOccupied() {
+		return occupied;
 	}
 }

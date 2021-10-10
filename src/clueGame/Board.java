@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 
 public class Board {
@@ -153,7 +155,20 @@ public class Board {
 		
 	}
 	
+	public void calcTargets(BoardCell startCell, int moves) {
+		
+	}
+	
 	// Getters and setters
+	public Set<BoardCell> getAdjList(int row, int col) {
+		return new HashSet<BoardCell>();
+	}
+	
+	public Set<BoardCell> getTargets() {
+		return new HashSet<BoardCell>();
+	}
+	
+	
 	public void setConfigFiles(String layout, String setup) {
 		layoutConfig = layout;
 		setupConfigFile = setup;
