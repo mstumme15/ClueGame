@@ -25,6 +25,8 @@ public class BoardAdjTargetTest {
 			board.initialize();
 		}
 		
+		
+		//Tests the adjacency of walkways 
 		@Test
 		public void testAdjacencyWalkways()
 		{
@@ -60,6 +62,8 @@ public class BoardAdjTargetTest {
 			
 		}
 		
+		
+		//Tests the adjacency of doors
 		@Test
 		public void testAdjacencyDoors()
 		{
@@ -95,6 +99,7 @@ public class BoardAdjTargetTest {
 			
 		}
 		
+		// Tests the adjacency inside rooms
 		@Test
 		public void testAdjacencyRooms()
 		{
