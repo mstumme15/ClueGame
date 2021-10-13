@@ -6,10 +6,12 @@ public class Room {
 	private String name;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
+	private char secretPassage;
 	
+
 	// Default constructor
 	public Room(){
-		
+		secretPassage = '0';
 	}
 	
 	// Getters and setters
@@ -35,6 +37,13 @@ public class Room {
 
 	public void setLabelCell(BoardCell labelCell) {
 		this.labelCell = labelCell;
+	}
+	public char getSecretPassage() {
+		return secretPassage;
+	}
+
+	public void setSecretPassage(char secretPassage) {
+		this.secretPassage = secretPassage;
 	}
 
 

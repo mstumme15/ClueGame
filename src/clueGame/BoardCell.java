@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class BoardCell {
@@ -13,12 +14,15 @@ public class BoardCell {
 	private boolean roomCenter = false;
 	private char secretPassage;
 	private Set<BoardCell> adjList;
+
 	private boolean occupied = false;
 	
 
 	// Default constructor
 	public BoardCell() {
 		super();
+		adjList = new HashSet<BoardCell>();
+		secretPassage = '0';
 	}
 	
 	// Parameterized constructor - sets row, cell, and initial
@@ -27,11 +31,18 @@ public class BoardCell {
 		this.row = row;
 		this.col = col;
 		this.initial = initial;
+		adjList = new HashSet<BoardCell>();
+		secretPassage = '0';
 	}
 	
+	@Override
+	public String toString() {
+		return "BoardCell [row=" + row + ", col=" + col + "]";
+	}
+
 	// Adds cell to instance's adjacency list
 	public void addAdj(BoardCell adj) {
-		
+		adjList.add(adj);
 	}
 	
 	
@@ -43,6 +54,10 @@ public class BoardCell {
 		else{
 			return true;
 		}
+	}
+	
+	public Set<BoardCell> getAdjList() {
+		return adjList;
 	}
 
 	public char getInitial() {

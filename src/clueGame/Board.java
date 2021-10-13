@@ -44,6 +44,7 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}
+		calcAdjacencies();
 		
 	}
 	
@@ -143,6 +144,8 @@ public class Board {
 						cell.setRoomCenter(true);
 					}
 					else {
+						Room room = theInstance.getRoom(cellInitial);
+						room.setSecretPassage(initial.charAt(1));
 						cell.setSecretPassage(initial.charAt(1));
 					}
 					
@@ -155,13 +158,125 @@ public class Board {
 		
 	}
 	
+	public void calcAdjacencies() {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				if (grid[i][j].getInitial() == 'W') {
+					if(grid[i][j].getDoorDirection() == DoorDirection.NONE) {
+						if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
+							
+							grid[i][j].addAdj(grid[i-1][j]);
+						}
+						
+						if ((i + 1) <= numRows-1 && grid[i+1][j].getInitial() == 'W') {
+							grid[i][j].addAdj(grid[i+1][j]);
+						}
+						
+						if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
+							grid[i][j].addAdj(grid[i][j-1]);
+						}
+						
+						if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
+							grid[i][j].addAdj(grid[i][j+1]);
+						}
+					}
+					else {
+						if (grid[i][j].getDoorDirection() == DoorDirection.UP) {
+							Room room = getRoom(grid[i-1][j]);
+							grid[i][j].addAdj(room.getCenterCell());
+							room.getCenterCell().addAdj(grid[i][j]);
+							
+							if ((i + 1) <= numRows-1  && grid[i+1][j].getInitial() == 'W') {
+								grid[i][j].addAdj(grid[i+1][j]);
+							}
+							
+							if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
+								grid[i][j].addAdj(grid[i][j-1]);
+							}
+							
+							if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
+								grid[i][j].addAdj(grid[i][j+1]);
+							}
+							
+						}
+						else if (grid[i][j].getDoorDirection() == DoorDirection.DOWN) {
+							Room room = getRoom(grid[i+1][j]);
+							grid[i][j].addAdj(room.getCenterCell());
+							room.getCenterCell().addAdj(grid[i][j]);
+							
+							if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
+								
+								grid[i][j].addAdj(grid[i-1][j]);
+							}
+							
+							if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
+								grid[i][j].addAdj(grid[i][j-1]);
+							}
+							
+							if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
+								grid[i][j].addAdj(grid[i][j+1]);
+							}
+						}
+						else if (grid[i][j].getDoorDirection() == DoorDirection.LEFT) {
+							Room room = getRoom(grid[i][j-1]);
+							grid[i][j].addAdj(room.getCenterCell());
+							room.getCenterCell().addAdj(grid[i][j]);
+							
+							if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
+								
+								grid[i][j].addAdj(grid[i-1][j]);
+							}
+							
+							if ((i + 1) <= numRows-1  && grid[i+1][j].getInitial() == 'W') {
+								grid[i][j].addAdj(grid[i+1][j]);
+							}
+							
+							if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
+								grid[i][j].addAdj(grid[i][j+1]);
+							}
+						}
+						else if (grid[i][j].getDoorDirection() == DoorDirection.RIGHT) {
+							Room room = getRoom(grid[i][j+1]);
+							grid[i][j].addAdj(room.getCenterCell());
+							room.getCenterCell().addAdj(grid[i][j]);
+							
+							if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
+								
+								grid[i][j].addAdj(grid[i-1][j]);
+							}
+							
+							if ((i + 1) <= numRows-1 && grid[i+1][j].getInitial() == 'W') {
+								grid[i][j].addAdj(grid[i+1][j]);
+							}
+							
+							if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
+								grid[i][j].addAdj(grid[i][j-1]);
+							}
+							
+						}
+					}
+					
+				}
+				
+				else if(grid[i][j].isRoomCenter()) {
+					Room room = getRoom(grid[i][j]);
+					if (room.getSecretPassage() != '0') {
+						room = getRoom(grid[i][j]);
+						char secretPassage = room.getSecretPassage();
+						grid[i][j].addAdj(getRoom(secretPassage).getCenterCell());
+					}
+				}
+			}
+		}
+	}
+	
 	public void calcTargets(BoardCell startCell, int moves) {
 		
 	}
 	
 	// Getters and setters
 	public Set<BoardCell> getAdjList(int row, int col) {
-		return new HashSet<BoardCell>();
+		return grid[row][col].getAdjList();
 	}
 	
 	public Set<BoardCell> getTargets() {
