@@ -20,6 +20,8 @@ public class Board {
 	private String setupConfigFile;
 	private Map<Character, Room> roomMap = new HashMap<Character, Room>();
 	private static Board theInstance = new Board();
+	private Set<BoardCell> targets;
+	private Set<BoardCell> cellsVisited;
 	
 	// Default constructor - private because of singleton pattern
 	private Board() {
@@ -270,8 +272,33 @@ public class Board {
 		}
 	}
 	
+	// calcTargets - calculates the possible targets on the board given the start cell and the number of moves 
 	public void calcTargets(BoardCell startCell, int moves) {
+		cellsVisited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
 		
+		cellsVisited.add(startCell);
+		findAllTargets(startCell, moves);
+	}
+	
+	// findAllTargets - recursive method to find all targets
+	public void findAllTargets(BoardCell currCell, int movesLeft) {
+		for (BoardCell adjCell : currCell.getAdjList()) { // Loops through all adjacent cells
+			if (!cellsVisited.contains(adjCell)) {
+				cellsVisited.add(adjCell);
+				
+				// If adj cell is a room center or its is not occupied and its the last move
+				// add adj cell to targets
+				if ((movesLeft == 1 && !adjCell.getOccupied()) || adjCell.isRoomCenter()) {
+					targets.add(adjCell);
+				// Else call findAllTargets with adj cell and one less move
+				} else if (!adjCell.getOccupied()) {
+					findAllTargets(adjCell, movesLeft-1);
+				}
+				
+				cellsVisited.remove(adjCell);
+			}
+		}
 	}
 	
 	// Getters and setters
@@ -280,7 +307,8 @@ public class Board {
 	}
 	
 	public Set<BoardCell> getTargets() {
-		return new HashSet<BoardCell>();
+		return targets;
+//		return new HashSet<BoardCell>();
 	}
 	
 	
