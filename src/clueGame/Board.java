@@ -163,103 +163,19 @@ public class Board {
 	public void calcAdjacencies() {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
+				
+				//Checks to see if space is a walkway
 				if (grid[i][j].getInitial() == 'W') {
+					
+					//Checks to see if space is a door
 					if(grid[i][j].getDoorDirection() == DoorDirection.NONE) {
-						if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
-							
-							grid[i][j].addAdj(grid[i-1][j]);
-						}
-						
-						if ((i + 1) <= numRows-1 && grid[i+1][j].getInitial() == 'W') {
-							grid[i][j].addAdj(grid[i+1][j]);
-						}
-						
-						if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
-							grid[i][j].addAdj(grid[i][j-1]);
-						}
-						
-						if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
-							grid[i][j].addAdj(grid[i][j+1]);
-						}
-					}
-					else {
-						if (grid[i][j].getDoorDirection() == DoorDirection.UP) {
-							Room room = getRoom(grid[i-1][j]);
-							grid[i][j].addAdj(room.getCenterCell());
-							room.getCenterCell().addAdj(grid[i][j]);
-							
-							if ((i + 1) <= numRows-1  && grid[i+1][j].getInitial() == 'W') {
-								grid[i][j].addAdj(grid[i+1][j]);
-							}
-							
-							if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
-								grid[i][j].addAdj(grid[i][j-1]);
-							}
-							
-							if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
-								grid[i][j].addAdj(grid[i][j+1]);
-							}
-							
-						}
-						else if (grid[i][j].getDoorDirection() == DoorDirection.DOWN) {
-							Room room = getRoom(grid[i+1][j]);
-							grid[i][j].addAdj(room.getCenterCell());
-							room.getCenterCell().addAdj(grid[i][j]);
-							
-							if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
-								
-								grid[i][j].addAdj(grid[i-1][j]);
-							}
-							
-							if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
-								grid[i][j].addAdj(grid[i][j-1]);
-							}
-							
-							if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
-								grid[i][j].addAdj(grid[i][j+1]);
-							}
-						}
-						else if (grid[i][j].getDoorDirection() == DoorDirection.LEFT) {
-							Room room = getRoom(grid[i][j-1]);
-							grid[i][j].addAdj(room.getCenterCell());
-							room.getCenterCell().addAdj(grid[i][j]);
-							
-							if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
-								
-								grid[i][j].addAdj(grid[i-1][j]);
-							}
-							
-							if ((i + 1) <= numRows-1  && grid[i+1][j].getInitial() == 'W') {
-								grid[i][j].addAdj(grid[i+1][j]);
-							}
-							
-							if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
-								grid[i][j].addAdj(grid[i][j+1]);
-							}
-						}
-						else if (grid[i][j].getDoorDirection() == DoorDirection.RIGHT) {
-							Room room = getRoom(grid[i][j+1]);
-							grid[i][j].addAdj(room.getCenterCell());
-							room.getCenterCell().addAdj(grid[i][j]);
-							
-							if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
-								
-								grid[i][j].addAdj(grid[i-1][j]);
-							}
-							
-							if ((i + 1) <= numRows-1 && grid[i+1][j].getInitial() == 'W') {
-								grid[i][j].addAdj(grid[i+1][j]);
-							}
-							
-							if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
-								grid[i][j].addAdj(grid[i][j-1]);
-							}
-							
-						}
-					}
+						walkway(i, j);
+					} else
+						doors(i, j);
 					
 				}
 				
+				//Checks to see if space is center of room
 				else if(grid[i][j].isRoomCenter()) {
 					Room room = getRoom(grid[i][j]);
 					if (room.getSecretPassage() != '0') {
@@ -269,6 +185,104 @@ public class Board {
 					}
 				}
 			}
+		}
+	}
+
+	//Adds to the adjacency list for doors
+	private void doors(int i, int j) {
+		{
+			if (grid[i][j].getDoorDirection() == DoorDirection.UP) {
+				Room room = getRoom(grid[i-1][j]);
+				grid[i][j].addAdj(room.getCenterCell());
+				room.getCenterCell().addAdj(grid[i][j]);
+				
+				if ((i + 1) <= numRows-1  && grid[i+1][j].getInitial() == 'W') {
+					grid[i][j].addAdj(grid[i+1][j]);
+				}
+				
+				if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
+					grid[i][j].addAdj(grid[i][j-1]);
+				}
+				
+				if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
+					grid[i][j].addAdj(grid[i][j+1]);
+				}
+				
+			}
+			else if (grid[i][j].getDoorDirection() == DoorDirection.DOWN) {
+				Room room = getRoom(grid[i+1][j]);
+				grid[i][j].addAdj(room.getCenterCell());
+				room.getCenterCell().addAdj(grid[i][j]);
+				
+				if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
+					
+					grid[i][j].addAdj(grid[i-1][j]);
+				}
+				
+				if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
+					grid[i][j].addAdj(grid[i][j-1]);
+				}
+				
+				if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
+					grid[i][j].addAdj(grid[i][j+1]);
+				}
+			}
+			else if (grid[i][j].getDoorDirection() == DoorDirection.LEFT) {
+				Room room = getRoom(grid[i][j-1]);
+				grid[i][j].addAdj(room.getCenterCell());
+				room.getCenterCell().addAdj(grid[i][j]);
+				
+				if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
+					
+					grid[i][j].addAdj(grid[i-1][j]);
+				}
+				
+				if ((i + 1) <= numRows-1  && grid[i+1][j].getInitial() == 'W') {
+					grid[i][j].addAdj(grid[i+1][j]);
+				}
+				
+				if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
+					grid[i][j].addAdj(grid[i][j+1]);
+				}
+			}
+			else if (grid[i][j].getDoorDirection() == DoorDirection.RIGHT) {
+				Room room = getRoom(grid[i][j+1]);
+				grid[i][j].addAdj(room.getCenterCell());
+				room.getCenterCell().addAdj(grid[i][j]);
+				
+				if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
+					
+					grid[i][j].addAdj(grid[i-1][j]);
+				}
+				
+				if ((i + 1) <= numRows-1 && grid[i+1][j].getInitial() == 'W') {
+					grid[i][j].addAdj(grid[i+1][j]);
+				}
+				
+				if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
+					grid[i][j].addAdj(grid[i][j-1]);
+				}
+				
+			}
+		}
+	}
+
+	//Adds to the adjacency list for walkways
+	private void walkway(int i, int j) {
+		if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
+			grid[i][j].addAdj(grid[i-1][j]);
+		}
+		
+		if ((i + 1) <= numRows-1 && grid[i+1][j].getInitial() == 'W') {
+			grid[i][j].addAdj(grid[i+1][j]);
+		}
+		
+		if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
+			grid[i][j].addAdj(grid[i][j-1]);
+		}
+		
+		if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
+			grid[i][j].addAdj(grid[i][j+1]);
 		}
 	}
 	
