@@ -309,14 +309,14 @@ public class Board {
 		for (BoardCell adjCell : currCell.getAdjList()) { // Loops through all adjacent cells
 			if (!cellsVisited.contains(adjCell)) {
 				cellsVisited.add(adjCell);
-				boolean notOccupied = !adjCell.getOccupied();
+				boolean cellNotOccupied = !adjCell.getOccupied();
 				
 				// If adj cell is a room center or its is not occupied and its the last move
 				// add adj cell to targets
-				if ((movesLeft == 1 && notOccupied) || adjCell.isRoomCenter()) {
+				if ((movesLeft == 1 && cellNotOccupied) || adjCell.isRoomCenter()) {
 					targets.add(adjCell);
 				// Else call findAllTargets with adj cell and one less move
-				} else if (notOccupied) {
+				} else if (cellNotOccupied) {
 					findAllTargets(adjCell, movesLeft-1);
 				}
 				
