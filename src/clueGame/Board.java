@@ -158,7 +158,6 @@ public class Board {
 				grid[i][j] = cell;
 			}
 		}
-		
 	}
 	
 	public void calcAdjacencies() {
@@ -169,7 +168,7 @@ public class Board {
 				if (grid[i][j].getInitial() == 'W') {
 					
 					//Checks to see if space is a door
-					if(grid[i][j].getDoorDirection() == DoorDirection.NONE) {
+					if (grid[i][j].getDoorDirection() == DoorDirection.NONE) {
 						walkway(i, j);
 					} else
 						doors(i, j);
@@ -268,8 +267,8 @@ public class Board {
 			}
 			break;
 			
-			default:
-				break;
+		default:
+			break;
 		}
 	}
 
@@ -310,13 +309,14 @@ public class Board {
 		for (BoardCell adjCell : currCell.getAdjList()) { // Loops through all adjacent cells
 			if (!cellsVisited.contains(adjCell)) {
 				cellsVisited.add(adjCell);
+				boolean notOccupied = !adjCell.getOccupied();
 				
 				// If adj cell is a room center or its is not occupied and its the last move
 				// add adj cell to targets
-				if ((movesLeft == 1 && !adjCell.getOccupied()) || adjCell.isRoomCenter()) {
+				if ((movesLeft == 1 && notOccupied) || adjCell.isRoomCenter()) {
 					targets.add(adjCell);
 				// Else call findAllTargets with adj cell and one less move
-				} else if (!adjCell.getOccupied()) {
+				} else if (notOccupied) {
 					findAllTargets(adjCell, movesLeft-1);
 				}
 				
@@ -333,7 +333,6 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
-	
 	
 	public void setConfigFiles(String layout, String setup) {
 		layoutConfig = layout;
