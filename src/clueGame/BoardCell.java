@@ -35,10 +35,6 @@ public class BoardCell {
 		secretPassage = '0';
 	}
 	
-	@Override
-	public String toString() {
-		return "BoardCell [row=" + row + ", col=" + col + "]";
-	}
 
 	// Adds cell to instance's adjacency list
 	public void addAdj(BoardCell adj) {
