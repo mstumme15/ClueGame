@@ -191,8 +191,11 @@ public class Board {
 
 	//Adds to the adjacency list for doors
 	private void doors(int i, int j) {
-		if (grid[i][j].getDoorDirection() == DoorDirection.UP) {
-			Room room = getRoom(grid[i-1][j]);
+		Room room = new Room();
+		
+		switch (grid[i][j].getDoorDirection()) {
+		case UP:
+			room = getRoom(grid[i-1][j]);
 			grid[i][j].addAdj(room.getCenterCell());
 			room.getCenterCell().addAdj(grid[i][j]);
 
@@ -207,10 +210,10 @@ public class Board {
 			if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
 				grid[i][j].addAdj(grid[i][j+1]);
 			}
-
-		}
-		else if (grid[i][j].getDoorDirection() == DoorDirection.DOWN) {
-			Room room = getRoom(grid[i+1][j]);
+			break;
+			
+		case DOWN:
+			room = getRoom(grid[i+1][j]);
 			grid[i][j].addAdj(room.getCenterCell());
 			room.getCenterCell().addAdj(grid[i][j]);
 
@@ -226,14 +229,14 @@ public class Board {
 			if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
 				grid[i][j].addAdj(grid[i][j+1]);
 			}
-		}
-		else if (grid[i][j].getDoorDirection() == DoorDirection.LEFT) {
-			Room room = getRoom(grid[i][j-1]);
+			break;
+			
+		case LEFT:
+			room = getRoom(grid[i][j-1]);
 			grid[i][j].addAdj(room.getCenterCell());
 			room.getCenterCell().addAdj(grid[i][j]);
 
 			if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
-
 				grid[i][j].addAdj(grid[i-1][j]);
 			}
 
@@ -244,9 +247,10 @@ public class Board {
 			if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
 				grid[i][j].addAdj(grid[i][j+1]);
 			}
-		}
-		else if (grid[i][j].getDoorDirection() == DoorDirection.RIGHT) {
-			Room room = getRoom(grid[i][j+1]);
+			break;
+			
+		case RIGHT:
+			room = getRoom(grid[i][j+1]);
 			grid[i][j].addAdj(room.getCenterCell());
 			room.getCenterCell().addAdj(grid[i][j]);
 
@@ -262,7 +266,10 @@ public class Board {
 			if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
 				grid[i][j].addAdj(grid[i][j-1]);
 			}
-
+			break;
+			
+			default:
+				break;
 		}
 	}
 
