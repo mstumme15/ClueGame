@@ -275,18 +275,22 @@ public class Board {
 
 	//Adds to the adjacency list for walkways
 	private void walkway(int i, int j) {
+		// Cell above
 		if ((i - 1) >= 0 && grid[i-1][j].getInitial() == 'W') {
 			grid[i][j].addAdj(grid[i-1][j]);
 		}
 		
+		// Cell below
 		if ((i + 1) <= numRows-1 && grid[i+1][j].getInitial() == 'W') {
 			grid[i][j].addAdj(grid[i+1][j]);
 		}
 		
+		// Cell left
 		if ((j - 1) >= 0 && grid[i][j-1].getInitial() == 'W') {
 			grid[i][j].addAdj(grid[i][j-1]);
 		}
 		
+		// Cell right
 		if ((j + 1) <= numColumns-1 && grid[i][j+1].getInitial() == 'W') {
 			grid[i][j].addAdj(grid[i][j+1]);
 		}
