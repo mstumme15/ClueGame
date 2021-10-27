@@ -123,32 +123,33 @@ public class Board {
 				
 				// Sets up door direction
 				if (initial.length() > 1) {
-					if (initial.charAt(1) == '>'){
+					
+					Room room = theInstance.getRoom(cellInitial);
+					switch (initial.charAt(1)) {
+					case '>':
 						cell.setDoorDirection(DoorDirection.RIGHT);
-					}
-					else if (initial.charAt(1) == '<'){
+						break;
+					case '<':
 						cell.setDoorDirection(DoorDirection.LEFT);
-					}
-					else if (initial.charAt(1) == '^'){
+						break;
+					case '^':
 						cell.setDoorDirection(DoorDirection.UP);
-					}
-					else if (initial.charAt(1) == 'v'){
+						break;
+					case 'v':
 						cell.setDoorDirection(DoorDirection.DOWN);
-					}
-					else if (initial.charAt(1) == '#'){
-						Room room = theInstance.getRoom(cellInitial);
+						break;
+					case '#':
 						room.setLabelCell(cell);
 						cell.setRoomLabel(true);
-					}
-					else if (initial.charAt(1) == '*'){
-						Room room = theInstance.getRoom(cellInitial);
+						break;
+					case '*':
 						room.setCenterCell(cell);
 						cell.setRoomCenter(true);
-					}
-					else {
-						Room room = theInstance.getRoom(cellInitial);
+						break;
+					default:
 						room.setSecretPassage(initial.charAt(1));
 						cell.setSecretPassage(initial.charAt(1));
+						break;
 					}
 					
 				} else {
