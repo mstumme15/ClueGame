@@ -178,10 +178,10 @@ public class Board {
 				
 				//Checks to see if space is center of room
 				else if(grid[i][j].isRoomCenter()) {
-					Room room = getRoom(grid[i][j]);
-					if (room.getSecretPassage() != '0') {
-						room = getRoom(grid[i][j]);
-						char secretPassage = room.getSecretPassage();
+					Room centerRoom = getRoom(grid[i][j]);
+					if (centerRoom.getSecretPassage() != '0') {
+						centerRoom = getRoom(grid[i][j]);
+						char secretPassage = centerRoom.getSecretPassage();
 						grid[i][j].addAdj(getRoom(secretPassage).getCenterCell());
 					}
 				}
