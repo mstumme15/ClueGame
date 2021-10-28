@@ -23,6 +23,8 @@ public class Board {
 	private Set<BoardCell> targets;
 	private Set<BoardCell> cellsVisited;
 	
+	private ArrayList<Player> players;
+	
 	// Default constructor - private because of singleton pattern
 	private Board() {
 		super();
@@ -357,5 +359,10 @@ public class Board {
 	
 	public BoardCell getCell(int row, int col) {
 		return grid[row][col];
+	}
+	
+	// TODO
+	public ArrayList<Player> getPlayers() {
+		return new ArrayList<Player>();
 	}
 }
