@@ -57,6 +57,7 @@ public class Board {
 		try {
 			File setup = new File("data/" + setupConfigFile); // Read in file
 			Scanner mySetup = new Scanner(setup);
+			players = new ArrayList<Player>();
 			
 			while (mySetup.hasNextLine()) {
 				String[] line = mySetup.nextLine().split(",");
@@ -68,7 +69,24 @@ public class Board {
 					char character = line[2].charAt(1);
 					roomMap.put(character, room);
 					
-				} else if (!line[0].equals("")) { // Throws exception if room type is wrong
+				} 
+				else if (line[0].equals("Person") && players.size()==0) { // Sets up the human player
+					String name = line[1].substring(1);
+					String color = line[2].substring(1);
+					int row = Integer.parseInt(line[3].substring(1));
+					int col = Integer.parseInt(line[4].substring(1));
+					Player player = new HumanPlayer(name, color, row, col);
+					players.add(player);
+				}
+				else if (line[0].equals("Person") && players.size()>0) { // Sets up the computer players
+					String name = line[1].substring(1);
+					String color = line[2].substring(1);
+					int row = Integer.parseInt(line[3].substring(1));
+					int col = Integer.parseInt(line[4].substring(1));
+					Player player = new ComputerPlayer(name, color, row, col);
+					players.add(player);
+				}
+				else if (!line[0].equals("")) { // Throws exception if room type is wrong
 					 String firstTwoChar = line[0].substring(0, 2);
 					 
 					if (!firstTwoChar.equals("//")) {
@@ -361,8 +379,7 @@ public class Board {
 		return grid[row][col];
 	}
 	
-	// TODO
 	public ArrayList<Player> getPlayers() {
-		return new ArrayList<Player>();
+		return players;
 	}
 }

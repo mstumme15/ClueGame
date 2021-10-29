@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +24,7 @@ public class gameSetupTests {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("ClueLayout306.csv", "ClueSetup306.txt");		
+		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");		
 		// Initialize will load config files 
 		board.initialize();
 	}
@@ -30,9 +32,10 @@ public class gameSetupTests {
 	
 	@Test
 	public void loadPeople() {
-		assertEquals(board.getPlayers().size(), 6);
-		assertTrue(board.getPlayers().contains(new HumanPlayer("Olivia", "Blue", 17, 0)));
-		assertTrue(board.getPlayers().contains(new ComputerPlayer("Emma", "Green", 0, 4)));
-		assertTrue(board.getPlayers().contains(new ComputerPlayer("Oliver", "Orange", 25, 14)));
+		ArrayList<Player> players = board.getPlayers();
+		assertEquals(players.size(), 6);
+		assertTrue(players.contains(new HumanPlayer("Olivia", "Blue", 17, 0)));
+		assertTrue(players.contains(new ComputerPlayer("Emma", "Green", 0, 4)));
+		assertTrue(players.contains(new ComputerPlayer("Oliver", "Orange", 25, 14)));
 	}
 }
