@@ -12,3 +12,11 @@ Room, Green Room, G
 // Other spaces on board
 Space, Unused, X
 Space, Walkway, W
+
+// People
+Person, Olivia, Blue, 17, 0
+Person, Emma, Green, 0, 4
+Person, Amelia, Red, 0, 11
+Person, Liam, Yellow, 5, 24
+Person, Noah, Purple, 17, 24
+Person, Oliver, Orange, 25, 14
