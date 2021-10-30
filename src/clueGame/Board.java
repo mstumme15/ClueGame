@@ -382,4 +382,9 @@ public class Board {
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
+	
+	// TODO
+	public ArrayList<Card> getDeck() {
+		return new ArrayList<Card>();
+	}
 }

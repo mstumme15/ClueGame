@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import clueGame.Board;
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
@@ -37,5 +39,14 @@ public class gameSetupTests {
 		assertTrue(players.contains(new HumanPlayer("Olivia", "Blue", 17, 0)));
 		assertTrue(players.contains(new ComputerPlayer("Emma", "Green", 0, 4)));
 		assertTrue(players.contains(new ComputerPlayer("Oliver", "Orange", 25, 14)));
+	}
+	
+	@Test
+	public void testCardDeck() {
+		ArrayList<Card> deck = board.getDeck();
+		assertEquals(deck.size(), 21);
+		assertTrue(deck.contains(new Card("Game Room", "ROOM")));
+		assertTrue(deck.contains(new Card("Noah", "PERSON")));
+		assertTrue(deck.contains(new Card("Clock", "WEAPON")));
 	}
 }
