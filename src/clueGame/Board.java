@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ public class Board {
 	
 	private ArrayList<Player> players;
 	private ArrayList<Card> deck;
+	private Solution theAnswer;
 	
 	// Default constructor - private because of singleton pattern
 	private Board() {
@@ -50,6 +52,7 @@ public class Board {
 			System.out.println(e.getMessage());
 		}
 		calcAdjacencies();
+		deal();
 		
 	}
 	
@@ -356,6 +359,36 @@ public class Board {
 		}
 	}
 	
+	// deal - Deals the deck of cards and the solution
+	public void deal() {
+	
+		ArrayList<Card> dealing = new ArrayList<Card>(deck); // Create a new dealing deck
+		Random rand = new Random();
+		Card room = dealing.get(rand.nextInt(9));
+		Card person = dealing.get(rand.nextInt(6)+9);
+		Card weapon = dealing.get(rand.nextInt(dealing.size()-15)+15);
+		
+		// Get the answer by adding a random room, person, and weapon
+		theAnswer = new Solution(room, person, weapon);
+		dealing.remove(room);
+		dealing.remove(person);
+		dealing.remove(weapon);
+		
+		// Deal the rest of the cards until empty
+		while(!dealing.isEmpty()) {
+			for (Player player : players) {
+				if(dealing.isEmpty()) {
+					break;
+				}
+				Card card = dealing.get(rand.nextInt(dealing.size()));
+				player.updateHand(card);
+				dealing.remove(card);
+			}
+		}
+		
+		
+	}
+	
 	// Getters and setters
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();
@@ -399,7 +432,6 @@ public class Board {
 	}
 
 	public Solution getAnswer() {
-		// TODO Auto-generated method stub
-		return null;
+		return theAnswer;
 	}
 }

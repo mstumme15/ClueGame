@@ -65,6 +65,8 @@ public class gameSetupTests {
 		assertEquals(3, count);
 	}
 	
+	// Tests to see if the deck was dealt properly by checking the solution, 
+	// checking if all cards were dealt, and checking if no duplicates were dealt
 	@Test
 	public void testCardsDealt() {
 		// Tests to see if answer is valid

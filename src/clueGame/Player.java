@@ -8,6 +8,7 @@ public abstract class Player{
 	private String color;
 	protected int row;
 	protected int column;
+	protected ArrayList<Card> hand;
 	
 	public Player(String name, String color, int row, int column) {
 		super();
@@ -15,6 +16,7 @@ public abstract class Player{
 		this.color = color;
 		this.row = row;
 		this.column = column;
+		hand = new ArrayList<Card>();
 	}
 
 	//Overide the equals method in order to see if list of players contains certian values
@@ -30,4 +32,8 @@ public abstract class Player{
     }
 	
 	public abstract ArrayList<Card> getHand();
+	
+	public void updateHand(Card card) {
+		hand.add(card);
+	}
 }

@@ -10,7 +10,7 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public ArrayList<Card> getHand() {
-		return new ArrayList<Card>();
+		return hand;
 	}
 
 	
