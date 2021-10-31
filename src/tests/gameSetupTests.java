@@ -44,9 +44,18 @@ public class gameSetupTests {
 	@Test
 	public void testCardDeck() {
 		ArrayList<Card> deck = board.getDeck();
-		assertEquals(deck.size(), 21);
-		assertTrue(deck.contains(new Card("Game Room", "ROOM")));
-		assertTrue(deck.contains(new Card("Noah", "PERSON")));
-		assertTrue(deck.contains(new Card("Clock", "WEAPON")));
+		int count = 0;
+		for (Card card: deck) {
+			if (card.equals(new Card("Game Room", "ROOM"))) {
+				count+=1;
+			}
+			if (card.equals(new Card("Noah", "PERSON"))) {
+				count+=1;
+			}
+			if (card.equals(new Card("Clock", "WEAPON"))) {
+				count+=1;
+			}
+		}
+		assertEquals(3, count);
 	}
 }

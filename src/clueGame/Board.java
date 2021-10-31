@@ -24,6 +24,7 @@ public class Board {
 	private Set<BoardCell> cellsVisited;
 	
 	private ArrayList<Player> players;
+	private ArrayList<Card> deck;
 	
 	// Default constructor - private because of singleton pattern
 	private Board() {
@@ -58,6 +59,7 @@ public class Board {
 			File setup = new File("data/" + setupConfigFile); // Read in file
 			Scanner mySetup = new Scanner(setup);
 			players = new ArrayList<Player>();
+			deck = new ArrayList<Card>();
 			
 			while (mySetup.hasNextLine()) {
 				String[] line = mySetup.nextLine().split(",");
@@ -68,6 +70,9 @@ public class Board {
 					room.setName(roomName);
 					char character = line[2].charAt(1);
 					roomMap.put(character, room);
+					if (line[0].equals("Room")) {
+						deck.add(new Card(roomName, "ROOM"));
+					}
 					
 				} 
 				else if (line[0].equals("Person") && players.size()==0) { // Sets up the human player
@@ -77,6 +82,7 @@ public class Board {
 					int col = Integer.parseInt(line[4].substring(1));
 					Player player = new HumanPlayer(name, color, row, col);
 					players.add(player);
+					deck.add(new Card(name, "PERSON"));
 				}
 				else if (line[0].equals("Person") && players.size()>0) { // Sets up the computer players
 					String name = line[1].substring(1);
@@ -85,6 +91,11 @@ public class Board {
 					int col = Integer.parseInt(line[4].substring(1));
 					Player player = new ComputerPlayer(name, color, row, col);
 					players.add(player);
+					deck.add(new Card(name, "PERSON"));
+				}
+				else if (line[0].equals("Weapon")) {
+					String name = line[1].substring(1);
+					deck.add(new Card(name, "WEAPON"));
 				}
 				else if (!line[0].equals("")) { // Throws exception if room type is wrong
 					 String firstTwoChar = line[0].substring(0, 2);
@@ -385,6 +396,6 @@ public class Board {
 	
 	// TODO
 	public ArrayList<Card> getDeck() {
-		return new ArrayList<Card>();
+		return deck;
 	}
 }
