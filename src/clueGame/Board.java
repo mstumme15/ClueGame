@@ -394,7 +394,6 @@ public class Board {
 		return players;
 	}
 	
-	// TODO
 	public ArrayList<Card> getDeck() {
 		return deck;
 	}

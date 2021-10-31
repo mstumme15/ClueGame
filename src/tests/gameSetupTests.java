@@ -31,7 +31,8 @@ public class gameSetupTests {
 		board.initialize();
 	}
 	
-	
+	// loadPeople - tests to see if people were loaded correctly and
+	// that the first person loaded in is the human player and the rest are computer players
 	@Test
 	public void loadPeople() {
 		ArrayList<Player> players = board.getPlayers();
@@ -41,6 +42,8 @@ public class gameSetupTests {
 		assertTrue(players.contains(new ComputerPlayer("Oliver", "Orange", 25, 14)));
 	}
 	
+	// testCardDeck - tests to see if one of each type of card is in the deck
+	// Can't test deck size without hard-coding
 	@Test
 	public void testCardDeck() {
 		ArrayList<Card> deck = board.getDeck();
