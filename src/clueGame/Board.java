@@ -397,4 +397,9 @@ public class Board {
 	public ArrayList<Card> getDeck() {
 		return deck;
 	}
+
+	public Solution getAnswer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

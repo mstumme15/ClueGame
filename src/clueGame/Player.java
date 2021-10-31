@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.util.ArrayList;
+
 public abstract class Player{
 
 	private String name;
@@ -27,4 +29,5 @@ public abstract class Player{
         }
     }
 	
+	public abstract ArrayList<Card> getHand();
 }

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
+import clueGame.Solution;
 
 public class gameSetupTests {
 	// We make the Board static because we can load it one time and 
@@ -60,5 +63,38 @@ public class gameSetupTests {
 			}
 		}
 		assertEquals(3, count);
+	}
+	
+	@Test
+	public void testCardsDealt() {
+		// Tests to see if answer is valid
+		Solution answer = board.getAnswer();
+		assertEquals(answer.getRoom().getType(), CardType.ROOM);
+		assertEquals(answer.getPerson().getType(), CardType.PERSON);
+		assertEquals(answer.getWeapon().getType(), CardType.WEAPON);
+		
+		
+		ArrayList<Player> players = board.getPlayers();
+		ArrayList<Card> deck = board.getDeck();
+		ArrayList<Card> dealt_deck = new ArrayList<Card>();
+		int deck_size = deck.size();
+		int dealt_size = 3; // For the 3 solution cards
+		
+	
+		// Check to see if all card were dealt and no duplicates
+		for (Player player : players) {
+			dealt_size += player.getHand().size();
+			dealt_deck.addAll(player.getHand());
+		}
+		
+		dealt_deck.add(answer.getRoom());
+		dealt_deck.add(answer.getPerson());
+		dealt_deck.add(answer.getWeapon());
+		
+		Set<Card> unique_deck = new HashSet<Card>(dealt_deck);	
+		
+		assertEquals(unique_deck.size(),dealt_deck.size()); // Tests for duplicates
+		assertEquals(deck_size, dealt_size); // Tests that all cards were dealt
+		
 	}
 }
