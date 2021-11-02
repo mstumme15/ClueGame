@@ -390,7 +390,13 @@ public class Board {
 	}
 	
 	public boolean checkAccusation(Solution accusation) {
-		return false;
+		if (theAnswer.equals(accusation)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 	
 	// Getters and setters
@@ -440,6 +446,6 @@ public class Board {
 	}
 	
 	public void setAnswer(Card room, Card person, Card weapon) {
-		
+		theAnswer = new Solution(room,person,weapon);
 	}
 }
