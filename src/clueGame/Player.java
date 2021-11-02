@@ -36,4 +36,8 @@ public abstract class Player{
 	public void updateHand(Card card) {
 		hand.add(card);
 	}
+	
+	public Card disproveSuggestion(Card room, Card person, Card weapon){
+		return null;
+	}
 }

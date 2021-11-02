@@ -73,15 +73,44 @@ class GameSolutionTest {
 		board.setAnswer(gameRoomCard, oliviaCard, pistolCard);
 		assertTrue(board.checkAccusation(new Solution(gameRoomCard, oliviaCard, pistolCard)));
 		
+		//Testing to make sure wrong solutions arent correct
 		assertFalse(board.checkAccusation(new Solution(greenRoomCard, oliviaCard, pistolCard)));
 		assertFalse(board.checkAccusation(new Solution(gameRoomCard, emmaCard, pistolCard)));
 		assertFalse(board.checkAccusation(new Solution(gameRoomCard, oliviaCard, ropeCard)));
 		
 	}
 	
-	//@Test
+	@Test
 	void disproveSuggestion() {
-		fail("Not yet implemented");
+		Player testPlayer = new HumanPlayer("Mike", "Blue", 17, 0);
+		testPlayer.updateHand(bedroomCard);
+		testPlayer.updateHand(pistolCard);
+		testPlayer.updateHand(laundryRoomCard);
+		
+		//Testing one matching card
+		assertEquals(bedroomCard, testPlayer.disproveSuggestion(bedroomCard, oliverCard, ropeCard));
+		
+		
+		//Testing multiple matching
+		int bedroomCount = 0;
+		int pistolCount = 0;
+		Card match;
+		for (int i = 0; i < 10; i++) {
+			match = testPlayer.disproveSuggestion(bedroomCard, oliverCard, pistolCard);
+			if (match.equals(bedroomCard)) {
+				bedroomCount += 1;
+			}
+			else if(match.equals(pistolCard)){
+				pistolCount += 1;
+			}
+		}
+		
+		assertTrue(bedroomCount >= 1);
+		assertTrue(pistolCount >= 1);
+		
+		
+		//Testing with no matching
+		assertEquals(null, testPlayer.disproveSuggestion(sunRoomCard, oliverCard, ropeCard));
 	}
 	
 	//@Test
