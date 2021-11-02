@@ -389,6 +389,10 @@ public class Board {
 		
 	}
 	
+	public boolean checkAccusation(Solution accusation) {
+		return false;
+	}
+	
 	// Getters and setters
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();
@@ -433,5 +437,9 @@ public class Board {
 
 	public Solution getAnswer() {
 		return theAnswer;
+	}
+	
+	public void setAnswer(Card room, Card person, Card weapon) {
+		
 	}
 }
