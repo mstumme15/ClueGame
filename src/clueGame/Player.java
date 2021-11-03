@@ -46,15 +46,17 @@ public abstract class Player{
 			}
 		}
 		
-		if (match.size() == 0) {
+		int numMatches = match.size();
+		
+		if (numMatches == 0) {
 			return null;
 		}
-		else if (match.size() == 1) {
+		else if (numMatches == 1) {
 			return match.get(0);
 		}
 		else {
 			Random rand = new Random();
-			int idx = rand.nextInt(match.size());
+			int idx = rand.nextInt(numMatches);
 			return match.get(idx);
 		}
 	}
