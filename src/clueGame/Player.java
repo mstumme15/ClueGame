@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Player{
 
@@ -37,7 +38,24 @@ public abstract class Player{
 		hand.add(card);
 	}
 	
-	public Card disproveSuggestion(Card room, Card person, Card weapon){
-		return null;
+	public Card disproveSuggestion(Card room, Card person, Card weapon) {
+		ArrayList<Card> match = new ArrayList<Card>();
+		for (Card card : hand) {
+			if (card.equals(room) || card.equals(person) || card.equals(weapon)) {
+				match.add(card);
+			}
+		}
+		
+		if (match.size() == 0) {
+			return null;
+		}
+		else if (match.size() == 1) {
+			return match.get(0);
+		}
+		else {
+			Random rand = new Random();
+			int idx = rand.nextInt(match.size());
+			return match.get(idx);
+		}
 	}
 }
