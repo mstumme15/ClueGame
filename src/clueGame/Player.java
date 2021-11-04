@@ -10,6 +10,7 @@ public abstract class Player{
 	protected int row;
 	protected int column;
 	protected ArrayList<Card> hand;
+	protected ArrayList<Card> seen;
 	
 	public Player(String name, String color, int row, int column) {
 		super();
@@ -36,6 +37,10 @@ public abstract class Player{
 	
 	public void updateHand(Card card) {
 		hand.add(card);
+	}
+	
+	public void updateSeen(Card card) {
+		seen.add(card);
 	}
 	
 	public Card disproveSuggestion(Card room, Card person, Card weapon) {

@@ -41,6 +41,7 @@ class GameSolutionTest {
 		// Initialize will load config files 
 		board.initialize();
 		
+		// Setup player cards
 		oliviaCard = new Card("Olivia", "PERSON");
 		emmaCard = new Card("Emma", "PERSON");
 		ameliaCard = new Card("Amelia", "PERSON");
@@ -48,6 +49,7 @@ class GameSolutionTest {
 		noahCard = new Card("Noah", "PERSON");
 		oliverCard = new Card("Oliver", "PERSON");
 		
+		// Setup room cards
 		bedroomCard = new Card("Bedroom", "ROOM");
 		kitchenCard = new Card("Kitchen", "ROOM");
 		officeCard = new Card("Office", "ROOM");
@@ -58,6 +60,7 @@ class GameSolutionTest {
 		greenRoomCard = new Card("Green Room", "ROOM");
 		laundryRoomCard = new Card("Laundry Room", "ROOM");
 		
+		// Setup weapon cards
 		pistolCard = new Card("Pistol", "WEAPON");
 		ropeCard = new Card("Rope", "WEAPON");
 		daggerCard = new Card("Dagger", "WEAPON");
@@ -113,9 +116,46 @@ class GameSolutionTest {
 		assertEquals(null, testPlayer.disproveSuggestion(sunRoomCard, oliverCard, ropeCard));
 	}
 	
-	//@Test
+	@Test
 	void handleSuggestion() {
-		fail("Not yet implemented");
+		ArrayList<Player> players = new ArrayList<Player>();
+		Player mike = new HumanPlayer("Mike", "Blue", 17, 0);
+		Player emily = new ComputerPlayer("Emily", "Red", 3, 0);
+		Player joel = new ComputerPlayer("Joel", "Green", 20, 0);
+		players.add(mike);
+		players.add(emily);
+		players.add(joel);
+		
+		mike.updateHand(bedroomCard);
+		mike.updateHand(pistolCard);
+		mike.updateHand(laundryRoomCard);
+		
+		emily.updateHand(emmaCard);
+		emily.updateHand(clockCard);
+		emily.updateHand(bottleCard);
+		
+		joel.updateHand(theaterCard);
+		joel.updateHand(gameRoomCard);
+		joel.updateHand(daggerCard);
+		
+		board.setPlayers(players);
+		
+		//Testing no matches
+		Card answer = board.handleSuggestion(sunRoomCard, emmaCard, ropeCard, mike);
+		assertEquals(null, answer);
+		
+		//Testing accusing player
+		answer = board.handleSuggestion(bedroomCard, ameliaCard, ropeCard, mike);
+		assertEquals(null, answer);
+		
+		//Testing human player
+		answer = board.handleSuggestion(bedroomCard, ameliaCard, pistolCard, mike);
+		assertEquals(bedroomCard, answer);
+		
+		//Test when multiple can disprove
+		answer = board.handleSuggestion(theaterCard, emmaCard, pistolCard, mike);
+		assertEquals(emmaCard, answer);
+		
 	}
 
 }

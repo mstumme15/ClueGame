@@ -389,6 +389,7 @@ public class Board {
 		
 	}
 	
+	// Checks to see if accusation is correct
 	public boolean checkAccusation(Solution accusation) {
 		if (theAnswer.equals(accusation)) {
 			return true;
@@ -397,6 +398,10 @@ public class Board {
 			return false;
 		}
 		
+	}
+	
+	public Card handleSuggestion(Card room, Card person, Card weapon, Player player) {
+		return null;
 	}
 	
 	// Getters and setters
@@ -435,6 +440,10 @@ public class Board {
 	
 	public ArrayList<Player> getPlayers() {
 		return players;
+	}
+	
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
 	}
 	
 	public ArrayList<Card> getDeck() {
