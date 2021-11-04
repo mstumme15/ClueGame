@@ -400,7 +400,20 @@ public class Board {
 		
 	}
 	
-	public Card handleSuggestion(Card room, Card person, Card weapon, Player player) {
+	public Card handleSuggestion(Card room, Card person, Card weapon, Player suggestingPlayer) {
+		
+		Card card;
+		for (Player player: players) {
+			if (player.equals(suggestingPlayer)) {
+				continue;
+			}
+			else {
+				card = player.disproveSuggestion(room, person, weapon);
+			}
+			if(card != null) {
+				return card;
+			}
+		}
 		return null;
 	}
 	

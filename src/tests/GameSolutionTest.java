@@ -141,7 +141,7 @@ class GameSolutionTest {
 		board.setPlayers(players);
 		
 		//Testing no matches
-		Card answer = board.handleSuggestion(sunRoomCard, emmaCard, ropeCard, mike);
+		Card answer = board.handleSuggestion(sunRoomCard, ameliaCard, ropeCard, mike);
 		assertEquals(null, answer);
 		
 		//Testing accusing player
@@ -149,7 +149,7 @@ class GameSolutionTest {
 		assertEquals(null, answer);
 		
 		//Testing human player
-		answer = board.handleSuggestion(bedroomCard, ameliaCard, pistolCard, mike);
+		answer = board.handleSuggestion(bedroomCard, ameliaCard, pistolCard, emily);
 		assertEquals(bedroomCard, answer);
 		
 		//Test when multiple can disprove
