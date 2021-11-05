@@ -23,6 +23,7 @@ public class gameSetupTests {
 	// We make the Board static because we can load it one time and 
 	// then do all the tests. 
 	private static Board board;
+	private static final int DECK_SIZE = 21;
 	
 	@BeforeAll
 	public static void setUp() {
@@ -62,6 +63,7 @@ public class gameSetupTests {
 				count+=1;
 			}
 		}
+		assertEquals(deck.size(), DECK_SIZE);
 		assertEquals(3, count);
 	}
 	

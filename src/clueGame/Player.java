@@ -69,4 +69,22 @@ public abstract class Player{
 			return match.get(idx);
 		}
 	}
+	
+	// TODO
+	public int getRow() {
+		return 0;
+	}
+	
+	// TODO
+	public int getCol() {
+		return 0;
+	}
+	
+	// TODO
+	public void setRow(int row) {
+	}
+
+	// TODO
+	public void setCol(int col) {
+	}
 }

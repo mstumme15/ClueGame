@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import clueGame.Board;
+import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
@@ -144,8 +145,91 @@ class ComputerAITest {
 		suggestion = emily.createSuggestion(board);
 		
 		assertEquals(suggestion, new Solution(bedroomCard,oliverCard,ropeCard));
-		
-		
 	}
 
+	
+	@Test
+	public void selectTarget() { 
+		ComputerPlayer joel = new ComputerPlayer("Joel", "Green", 6, 9);
+		BoardCell cellNearOffice = board.getCell(joel.getRow(), joel.getCol());
+		BoardCell target;
+		
+		// Office is not in seen list
+		board.calcTargets(cellNearOffice, 2);
+		target = joel.selectTarget(board.getTargets());
+		assertTrue(target.isRoomCenter());
+		assertTrue(target.getInitial() == 'O');
+		
+		// Office is in seen list
+		joel.updateSeen(officeCard);
+		board.calcTargets(cellNearOffice, 2);
+		int countR6C7 = 0;
+		int countR7C8 = 0;
+		int countR8C9 = 0;
+		int countR7C10 = 0;
+		int countR6C11 = 0;
+		int countR5C10 = 0;
+		for (int i = 0; i < 60; i++) {
+			target = joel.selectTarget(board.getTargets());
+			if (target.equals(new BoardCell(6, 7, 'W'))) {
+				countR6C7 += 0;
+			}
+			else if (target.equals(new BoardCell(7, 8, 'W'))) {
+				countR7C8 += 0;
+			}
+			else if (target.equals(new BoardCell(8, 9, 'W'))) {
+				countR8C9 += 0;
+			}
+			else if (target.equals(new BoardCell(7, 10, 'W'))) {
+				countR7C10 += 0;
+			}
+			else if (target.equals(new BoardCell(6, 11, 'W'))) {
+				countR6C11 += 0;
+			}
+			else if (target.equals(new BoardCell(5, 10, 'W'))) {
+				countR5C10 += 0;
+			}
+		}
+		
+		assertTrue(countR6C7 > 0);
+		assertTrue(countR7C8 > 0);
+		assertTrue(countR8C9 > 0);
+		assertTrue(countR7C10 > 0);
+		assertTrue(countR6C11 > 0);
+		assertTrue(countR5C10 > 0);
+		
+		
+		// Random target not by a room
+		joel.setRow(17);
+		joel.setCol(16);
+		BoardCell cellNoRooms = board.getCell(joel.getRow(), joel.getCol());
+		board.calcTargets(cellNoRooms, 1);
+		int countR17C15 = 0;
+		int countR16C16 = 0;
+		int countR17C17 = 0;
+		int countR18C16 = 0;
+		for (int i = 0; i < 40; i++) {
+			target = joel.selectTarget(board.getTargets());
+			if (target.getRow() == 17) {
+				if (target.getCol() == 15) {
+					countR17C15 += 1;
+				}
+				else {
+					countR17C17 += 1;
+				}
+			}
+			else if (target.getCol() == 16) {
+				if (target.getRow() == 16) {
+					countR16C16 += 1;
+				}
+				else { 
+					countR18C16 += 1;
+				}
+			}
+		}
+		assertTrue(countR17C15 > 0);
+		assertTrue(countR16C16 > 0);
+		assertTrue(countR17C17 > 0);
+		assertTrue(countR18C16 > 0);
+	}
 }

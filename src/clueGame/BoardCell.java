@@ -41,6 +41,10 @@ public class BoardCell {
 		adjList.add(adj);
 	}
 	
+	// TODO
+	public boolean equals(Object o) {
+		return false;
+	}
 	
 	// Getters and setters
 	public boolean isDoorway() {
@@ -102,5 +106,15 @@ public class BoardCell {
 	
 	public boolean getOccupied() {
 		return occupied;
+	}
+	
+	// TODO
+	public int getRow() {
+		return 0;
+	}
+	
+	// TODO
+	public int getCol() {
+		return 0;
 	}
 }

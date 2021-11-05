@@ -2,6 +2,7 @@ package clueGame;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 
 public class ComputerPlayer extends Player {
@@ -38,5 +39,10 @@ public class ComputerPlayer extends Player {
 		}
 
 		return new Solution(suggestedRoom, suggestedPerson, suggestedWeapon);
+	}
+	
+	// TODO
+	public BoardCell selectTarget(Set<BoardCell> targets) {
+		return new BoardCell(0, 0, 'X');
 	}
 }
