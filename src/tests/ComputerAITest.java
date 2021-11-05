@@ -169,20 +169,13 @@ class ComputerAITest {
 		int countR6C12 = 0;
 		int countR5C9 = 0;
 		int countOffice = 0;
-		for (int i = 0; i < 140; i++) {
+		for (int i = 0; i < 140; i++) { // 10 loop iterations per possible target
 			target = joel.selectTarget(board.getTargets(), board);
-			if (target.equals(new BoardCell(8, 8, 'W'))) {
-				countR8C8 += 1;
-			}
-			else if (target.equals(new BoardCell(6, 12, 'W'))) {
-				countR6C12 += 1;
-			}
-			else if (target.equals(new BoardCell(5, 9, 'W'))) {
-				countR5C9 += 1;
-			}
-			else if (target.equals(new BoardCell(2, 8, 'O'))) {
-				countOffice += 1;
-			}
+			
+			countR8C8 = compareTargetToExpected(target, 8, 8, 'W', countR8C8);
+			countR6C12 = compareTargetToExpected(target, 6, 12, 'W', countR6C12);
+			countR5C9 = compareTargetToExpected(target, 5, 9, 'W', countR5C9);
+			countOffice = compareTargetToExpected(target, 2, 8, 'O', countOffice);
 		}
 		
 		assertTrue(countR8C8 > 0);
@@ -193,35 +186,33 @@ class ComputerAITest {
 		
 		// Random target not by a room
 		joel.setRow(17);
-		joel.setCol(16);
+		joel.setCol(16); // set location away from rooms
 		BoardCell cellNoRooms = board.getCell(joel.getRow(), joel.getColumn());
 		board.calcTargets(cellNoRooms, 1);
 		int countR17C15 = 0;
 		int countR16C16 = 0;
 		int countR17C17 = 0;
 		int countR18C16 = 0;
-		for (int i = 0; i < 40; i++) {
+		for (int i = 0; i < 40; i++) { // 10 loop iterations per possible target
 			target = joel.selectTarget(board.getTargets(), board);
-			if (target.getRow() == 17) {
-				if (target.getCol() == 15) {
-					countR17C15 += 1;
-				}
-				else {
-					countR17C17 += 1;
-				}
-			}
-			else if (target.getCol() == 16) {
-				if (target.getRow() == 16) {
-					countR16C16 += 1;
-				}
-				else { 
-					countR18C16 += 1;
-				}
-			}
+			
+			countR17C15 = compareTargetToExpected(target, 17, 15, 'W', countR17C15);
+			countR16C16 = compareTargetToExpected(target, 16, 16, 'W', countR16C16);
+			countR17C17 = compareTargetToExpected(target, 17, 17, 'W', countR17C17);
+			countR18C16 = compareTargetToExpected(target, 18, 16, 'W', countR18C16);
 		}
 		assertTrue(countR17C15 > 0);
 		assertTrue(countR16C16 > 0);
 		assertTrue(countR17C17 > 0);
 		assertTrue(countR18C16 > 0);
+	}
+	
+	public int compareTargetToExpected(BoardCell target, int row, int col, char initial, int countExpected) {
+		if (target.equals(new BoardCell(row, col, initial))) {
+			return ++countExpected;
+		}
+		else {
+			return countExpected;
+		}
 	}
 }
