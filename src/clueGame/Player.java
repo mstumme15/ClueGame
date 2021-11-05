@@ -70,21 +70,19 @@ public abstract class Player{
 		}
 	}
 	
-	// TODO
 	public int getRow() {
-		return 0;
+		return row;
 	}
 	
-	// TODO
-	public int getCol() {
-		return 0;
+	public int getColumn() {
+		return column;
 	}
 	
-	// TODO
 	public void setRow(int row) {
+		this.row = row;
 	}
 
-	// TODO
-	public void setCol(int col) {
+	public void setCol(int column) {
+		this.column = column;
 	}
 }

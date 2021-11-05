@@ -151,65 +151,57 @@ class ComputerAITest {
 	@Test
 	public void selectTarget() { 
 		ComputerPlayer joel = new ComputerPlayer("Joel", "Green", 6, 9);
-		BoardCell cellNearOffice = board.getCell(joel.getRow(), joel.getCol());
+		BoardCell cellNearOffice = board.getCell(joel.getRow(), joel.getColumn());
 		BoardCell target;
 		
 		// Office is not in seen list
-		board.calcTargets(cellNearOffice, 2);
-		target = joel.selectTarget(board.getTargets());
+		board.calcTargets(cellNearOffice, 3);
+		target = joel.selectTarget(board.getTargets(), board);
+		System.out.println(target.getRow());
+		System.out.println(target.getCol());
 		assertTrue(target.isRoomCenter());
 		assertTrue(target.getInitial() == 'O');
 		
 		// Office is in seen list
 		joel.updateSeen(officeCard);
-		board.calcTargets(cellNearOffice, 2);
-		int countR6C7 = 0;
-		int countR7C8 = 0;
-		int countR8C9 = 0;
-		int countR7C10 = 0;
-		int countR6C11 = 0;
-		int countR5C10 = 0;
-		for (int i = 0; i < 60; i++) {
-			target = joel.selectTarget(board.getTargets());
-			if (target.equals(new BoardCell(6, 7, 'W'))) {
-				countR6C7 += 0;
+		board.calcTargets(cellNearOffice, 3);
+		int countR8C8 = 0;
+		int countR6C12 = 0;
+		int countR5C9 = 0;
+		int countOffice = 0;
+		for (int i = 0; i < 140; i++) {
+			target = joel.selectTarget(board.getTargets(), board);
+			if (target.equals(new BoardCell(8, 8, 'W'))) {
+				countR8C8 += 1;
 			}
-			else if (target.equals(new BoardCell(7, 8, 'W'))) {
-				countR7C8 += 0;
+			else if (target.equals(new BoardCell(6, 12, 'W'))) {
+				countR6C12 += 1;
 			}
-			else if (target.equals(new BoardCell(8, 9, 'W'))) {
-				countR8C9 += 0;
+			else if (target.equals(new BoardCell(5, 9, 'W'))) {
+				countR5C9 += 1;
 			}
-			else if (target.equals(new BoardCell(7, 10, 'W'))) {
-				countR7C10 += 0;
-			}
-			else if (target.equals(new BoardCell(6, 11, 'W'))) {
-				countR6C11 += 0;
-			}
-			else if (target.equals(new BoardCell(5, 10, 'W'))) {
-				countR5C10 += 0;
+			else if (target.equals(new BoardCell(2, 8, 'O'))) {
+				countOffice += 1;
 			}
 		}
 		
-		assertTrue(countR6C7 > 0);
-		assertTrue(countR7C8 > 0);
-		assertTrue(countR8C9 > 0);
-		assertTrue(countR7C10 > 0);
-		assertTrue(countR6C11 > 0);
-		assertTrue(countR5C10 > 0);
+		assertTrue(countR8C8 > 0);
+		assertTrue(countR6C12 > 0);
+		assertTrue(countR5C9 > 0);
+		assertTrue(countOffice > 0);
 		
 		
 		// Random target not by a room
 		joel.setRow(17);
 		joel.setCol(16);
-		BoardCell cellNoRooms = board.getCell(joel.getRow(), joel.getCol());
+		BoardCell cellNoRooms = board.getCell(joel.getRow(), joel.getColumn());
 		board.calcTargets(cellNoRooms, 1);
 		int countR17C15 = 0;
 		int countR16C16 = 0;
 		int countR17C17 = 0;
 		int countR18C16 = 0;
 		for (int i = 0; i < 40; i++) {
-			target = joel.selectTarget(board.getTargets());
+			target = joel.selectTarget(board.getTargets(), board);
 			if (target.getRow() == 17) {
 				if (target.getCol() == 15) {
 					countR17C15 += 1;

@@ -41,9 +41,14 @@ public class BoardCell {
 		adjList.add(adj);
 	}
 	
-	// TODO
 	public boolean equals(Object o) {
-		return false;
+		BoardCell cellToCompare = (BoardCell) o;
+		if (this.row == cellToCompare.getRow() && this.col == cellToCompare.getCol()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	// Getters and setters
@@ -108,13 +113,11 @@ public class BoardCell {
 		return occupied;
 	}
 	
-	// TODO
 	public int getRow() {
-		return 0;
+		return row;
 	}
 	
-	// TODO
 	public int getCol() {
-		return 0;
+		return col;
 	}
 }

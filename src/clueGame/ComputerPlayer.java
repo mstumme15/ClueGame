@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -41,8 +42,36 @@ public class ComputerPlayer extends Player {
 		return new Solution(suggestedRoom, suggestedPerson, suggestedWeapon);
 	}
 	
-	// TODO
-	public BoardCell selectTarget(Set<BoardCell> targets) {
-		return new BoardCell(0, 0, 'X');
+	public BoardCell selectTarget(Set<BoardCell> targets, Board board) {
+		Set<BoardCell> rooms = new HashSet<BoardCell>();
+		Set<BoardCell> roomsSeen = new HashSet<BoardCell>();
+		Random rand = new Random();
+		
+		for (BoardCell target : targets) {
+			if (target.isRoomCenter()) {
+				rooms.add(target);
+			}
+			for (Card seen : this.seen) {
+				Room currRoom = board.getRoom(target.getInitial());
+				String currRoomName = currRoom.getName();
+				if (seen.equals(new Card(currRoomName, "ROOM"))) {
+					roomsSeen.add(target);
+				}
+			}
+		}
+		
+		rooms.removeAll(roomsSeen);
+		
+		if (rooms.size() == 0) {
+			int randIdx = rand.nextInt(targets.size());
+			Object[] randTargets = targets.toArray();
+			return (BoardCell) randTargets[randIdx];
+		}
+		else {
+			int randIdx = rand.nextInt(rooms.size());
+			Object[] randTargets = rooms.toArray();
+			return (BoardCell) randTargets[randIdx];
+		}
+		
 	}
 }
