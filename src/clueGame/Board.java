@@ -28,6 +28,9 @@ public class Board {
 	private ArrayList<Card> deck;
 	private Solution theAnswer;
 	
+	public static final int NUM_PLAYERS = 6;
+	public static final int NUM_ROOMS = 9;
+	
 	// Default constructor - private because of singleton pattern
 	private Board() {
 		super();
@@ -364,8 +367,8 @@ public class Board {
 	
 		ArrayList<Card> dealing = new ArrayList<Card>(deck); // Create a new dealing deck
 		Random rand = new Random();
-		Card room = dealing.get(rand.nextInt(9));
-		Card person = dealing.get(rand.nextInt(6)+9);
+		Card room = dealing.get(rand.nextInt(NUM_ROOMS));
+		Card person = dealing.get(rand.nextInt(NUM_PLAYERS)+NUM_ROOMS);
 		Card weapon = dealing.get(rand.nextInt(dealing.size()-15)+15);
 		
 		// Get the answer by adding a random room, person, and weapon
@@ -456,6 +459,7 @@ public class Board {
 		return players;
 	}
 	
+	// For testing
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}

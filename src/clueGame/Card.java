@@ -10,11 +10,18 @@ public class Card {
 		this.type = CardType.valueOf(type);
 	}
 	
-	// equals - compares to see if two cards are equivalent
-	// returns true if the cards are the same
-	public boolean equals(Card target) {
-		return target.cardName.equals(cardName);
-	}
+	
+	//Overide the equals method in order to see if list of cards contains certain values
+	@Override 
+	public boolean equals(Object target){
+		Card o = (Card) target;
+        if (this.cardName.equals(o.cardName) && this.type.equals(o.type)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 	
 	// Getters and setters 
 	public String getName() {

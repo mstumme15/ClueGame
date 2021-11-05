@@ -108,10 +108,10 @@ class ComputerAITest {
 		for (int i= 0; i < 20; i++) {
 			suggestion = emily.createSuggestion(board);
 			// Checks that weapons are valid
-			if (suggestion.getWeapon().getName() == "Pistol") {
+			if (suggestion.getWeapon().getName().equals("Pistol")) {
 				pistolCount++;
 			}
-			else if (suggestion.getWeapon().getName() == "Rope") {
+			else if (suggestion.getWeapon().getName().equals("Rope")) {
 				ropeCount++;
 			}
 			else {
@@ -119,10 +119,10 @@ class ComputerAITest {
 			}
 			
 			// Check that players are valid
-			if (suggestion.getPerson().getName() == "Noah") {
+			if (suggestion.getPerson().getName().equals("Noah")) {
 				noahCount++;
 			}
-			else if (suggestion.getPerson().getName() == "Oliver") {
+			else if (suggestion.getPerson().getName().equals("Oliver")) {
 				oliverCount++;
 			}
 			else {
@@ -143,7 +143,7 @@ class ComputerAITest {
 		
 		suggestion = emily.createSuggestion(board);
 		
-		assertEquals(suggestion, new Solution(bedroomCard,ropeCard,oliverCard));
+		assertEquals(suggestion, new Solution(bedroomCard,oliverCard,ropeCard));
 		
 		
 	}
