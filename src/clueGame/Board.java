@@ -400,6 +400,7 @@ public class Board {
 		
 	}
 	
+	// Returns the card that can disprove a suggestions
 	public Card handleSuggestion(Card room, Card person, Card weapon, Player suggestingPlayer) {
 		
 		Card card;

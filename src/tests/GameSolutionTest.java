@@ -149,7 +149,7 @@ class GameSolutionTest {
 		assertEquals(null, answer);
 		
 		//Testing human player
-		answer = board.handleSuggestion(bedroomCard, ameliaCard, pistolCard, emily);
+		answer = board.handleSuggestion(bedroomCard, ameliaCard, ropeCard, emily);
 		assertEquals(bedroomCard, answer);
 		
 		//Test when multiple can disprove

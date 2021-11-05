@@ -11,4 +11,9 @@ public class ComputerPlayer extends Player {
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
+	
+	// Creates a suggestion based off room and seen cards
+	public Solution createSuggestion(Board board) {
+		return new Solution(new Card("test", "ROOM"), new Card("test", "PERSON"), new Card("test", "WEAPON"));
+	}
 }

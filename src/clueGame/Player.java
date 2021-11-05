@@ -19,9 +19,10 @@ public abstract class Player{
 		this.row = row;
 		this.column = column;
 		hand = new ArrayList<Card>();
+		seen = new ArrayList<Card>();
 	}
 
-	//Overide the equals method in order to see if list of players contains certian values
+	//Overide the equals method in order to see if list of players contains certain values
 	@Override 
 	public boolean equals(Object p){
 		Player o = (Player) p;
@@ -35,14 +36,17 @@ public abstract class Player{
 	
 	public abstract ArrayList<Card> getHand();
 	
+	// Updates the hand
 	public void updateHand(Card card) {
 		hand.add(card);
 	}
 	
+	// Updates the seen cards
 	public void updateSeen(Card card) {
 		seen.add(card);
 	}
 	
+	// Disproves a player suggestion or returns null
 	public Card disproveSuggestion(Card room, Card person, Card weapon) {
 		ArrayList<Card> match = new ArrayList<Card>();
 		for (Card card : hand) {
