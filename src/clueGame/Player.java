@@ -85,4 +85,8 @@ public abstract class Player{
 	public void setCol(int column) {
 		this.column = column;
 	}
+	
+	public String getName() {
+		return name;
+	}
 }

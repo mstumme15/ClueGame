@@ -117,17 +117,15 @@ public class GameControlPanel extends JPanel {
 	}
 
 	private void setGuessResult(String string) {
-		// TODO Auto-generated method stub
-		
+		guessResult.setText(string);
 	}
 
 	private void setGuess(String string) {
-		// TODO Auto-generated method stub
-		
+		guess.setText(string);
 	}
 
 	private void setTurn(ComputerPlayer computerPlayer, int i) {
-		// TODO Auto-generated method stub
-		
+		turn.setText(computerPlayer.getName());
+		roll.setText(Integer.toString(i));
 	}
 }
