@@ -113,10 +113,8 @@ public class ClueCardsPanel extends JPanel {
 	}
 	
 	
-	// TODO
 	// Check card type, then add to peopleSeen, roomsSeen, or weaponsSeen
 	// Then add peopleSeen, roomsSeen, and weaponsSeen to people, rooms, and weapons
-	// Call from main
 	public void updateSeen(ArrayList<Card> seenCards) {
 		people.remove(peopleSeen);
 		rooms.remove(roomsSeen);
@@ -125,15 +123,19 @@ public class ClueCardsPanel extends JPanel {
 		JLabel seenPeopleLabel = new JLabel("Seen:");
 		JLabel seenRoomsLabel = new JLabel("Seen:");
 		JLabel seenWeaponsLabel = new JLabel("Seen:");
+		
+		
 		peopleSeen.add(seenPeopleLabel);
 		roomsSeen.add(seenRoomsLabel);
 		weaponsSeen.add(seenWeaponsLabel);
 		
 		// Initially, no cards have been seen by the player
 		if (seenCards.size() == 0) {
-			JTextField seenNoPeople = new JTextField(14);
-			JTextField seenNoRooms = new JTextField(14);
-			JTextField seenNoWeapons = new JTextField(14);
+			
+			JTextField seenNoPeople = new JTextField(15);
+			JTextField seenNoRooms = new JTextField(15);
+			JTextField seenNoWeapons = new JTextField(15);
+			
 			seenNoPeople.setEditable(false);
 			seenNoPeople.setText("None");
 			seenNoRooms.setEditable(false);
@@ -153,6 +155,70 @@ public class ClueCardsPanel extends JPanel {
 			add(rooms);
 			add(weapons);
 		}
+		else {
+			JTextField seenPeople;
+			JTextField seenRooms;
+			JTextField seenWeapons;
+			
+			int peopleCount = 0;
+			int roomCount = 0;
+			int weaponCount = 0;
+			
+			
+			for (Card seen: seenCards) {
+				if (seen.getType() == CardType.PERSON) {
+					seenPeople = new JTextField(15);
+					seenPeople.setEditable(false);
+					seenPeople.setText(seen.getName());
+					peopleSeen.add(seenPeople);
+					peopleCount++;
+				}
+				else if (seen.getType() == CardType.ROOM) {
+					seenRooms = new JTextField(15);
+					seenRooms.setEditable(false);
+					seenRooms.setText(seen.getName());
+					roomsSeen.add(seenRooms);
+					roomCount++;
+				}
+				else {
+					seenWeapons = new JTextField(15);
+					seenWeapons.setEditable(false);
+					seenWeapons.setText(seen.getName());
+					weaponsSeen.add(seenWeapons);
+					weaponCount++;
+				}
+			}
+			if (peopleCount == 0) {
+				seenPeople = new JTextField(15);
+				seenPeople.setEditable(false);
+				seenPeople.setText("None");
+				peopleSeen.add(seenPeople);
+				peopleCount++;
+			}
+			else if (roomCount == 0) {
+				seenRooms = new JTextField(15);
+				seenRooms.setEditable(false);
+				seenRooms.setText("None");
+				roomsSeen.add(seenRooms);
+				roomCount++;
+			}
+			else if (weaponCount == 0) {
+				seenWeapons = new JTextField(15);
+				seenWeapons.setEditable(false);
+				seenWeapons.setText("None");
+				weaponsSeen.add(seenWeapons);
+				weaponCount++;
+			}
+			
+			peopleSeen.setLayout(new GridLayout(peopleCount+1, 0));
+			roomsSeen.setLayout(new GridLayout(roomCount+1, 0));
+			weaponsSeen.setLayout(new GridLayout(weaponCount+1, 0));
+			
+			people.add(peopleSeen);
+			rooms.add(roomsSeen);
+			weapons.add(weaponsSeen);
+			
+		}
 	}
 	
 	/**
@@ -166,6 +232,12 @@ public class ClueCardsPanel extends JPanel {
 		testPlayer.updateHand(new Card("Bedroom", "ROOM"));
 		testPlayer.updateHand(new Card("Pistol", "WEAPON"));
 		testPlayer.updateHand(new Card("Laundry Room", "ROOM"));
+		
+		// Update cards in the seen
+		testPlayer.updateSeen(new Card("Dagger", "WEAPON"));
+		testPlayer.updateSeen(new Card("Sun Room", "ROOM"));
+		testPlayer.updateSeen(new Card("Olivia", "PERSON"));
+		testPlayer.updateSeen(new Card("Liam", "PERSON"));
 		
 		ClueCardsPanel knownCards = new ClueCardsPanel(testPlayer.getHand());
 		knownCards.setBorder(new TitledBorder (new EtchedBorder(), "Known Cards"));
