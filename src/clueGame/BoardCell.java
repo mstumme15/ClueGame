@@ -59,16 +59,19 @@ public class BoardCell {
 //		Rectangle currCell = new Rectangle(cellXLocation, cellYLocation, cellWidth, cellHeight);
 		if (this.getInitial() == 'X') {
 			g.setColor(Color.BLACK);
+			g.fillRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 		}
 		else if (this.getInitial() == 'W') {
+			g.setColor(Color.BLACK);
+			g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 			g.setColor(Color.YELLOW);
+			g.fillRect(cellXLocation+1, cellYLocation+1, cellWidth-2, cellHeight-2);
 		}
 		else {
 			g.setColor(Color.GRAY);
+			g.fillRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 		}
-		
-		g.fillRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
-		g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
+//		g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 	}
 	
 	// Getters and setters
