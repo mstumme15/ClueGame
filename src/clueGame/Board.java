@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -10,8 +11,10 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JPanel;
 
-public class Board {
+
+public class Board extends JPanel {
 	
 	// Instance variables
 	private BoardCell[][] grid;
@@ -27,6 +30,9 @@ public class Board {
 	private ArrayList<Player> players;
 	private ArrayList<Card> deck;
 	private Solution theAnswer;
+	
+	private int boardWidth;
+	private int boardHeight;
 	
 	public static final int NUM_PLAYERS = 6;
 	public static final int NUM_ROOMS = 9;
@@ -420,6 +426,22 @@ public class Board {
 		}
 		return null;
 	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		boardWidth = this.getWidth();
+		boardHeight = this.getHeight();
+		int cellWidth = boardWidth / numColumns;
+		int cellHeight = boardHeight / numRows;
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				grid[i][j].draw(g, j*cellWidth, i*cellHeight, cellWidth, cellHeight);
+			}
+		}
+		
+	}
+	
 	
 	// Getters and setters
 	public Set<BoardCell> getAdjList(int row, int col) {

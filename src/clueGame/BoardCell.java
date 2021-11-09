@@ -1,5 +1,9 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,6 +53,22 @@ public class BoardCell {
 		else {
 			return false;
 		}
+	}
+	
+	public void draw(Graphics g, int cellXLocation, int cellYLocation, int cellWidth, int cellHeight) {
+//		Rectangle currCell = new Rectangle(cellXLocation, cellYLocation, cellWidth, cellHeight);
+		if (this.getInitial() == 'X') {
+			g.setColor(Color.BLACK);
+		}
+		else if (this.getInitial() == 'W') {
+			g.setColor(Color.YELLOW);
+		}
+		else {
+			g.setColor(Color.GRAY);
+		}
+		
+		g.fillRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
+		g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 	}
 	
 	// Getters and setters
