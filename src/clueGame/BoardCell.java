@@ -1,6 +1,8 @@
 package clueGame;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -45,6 +47,7 @@ public class BoardCell {
 		adjList.add(adj);
 	}
 	
+	// Checks if 2 cells are equal
 	public boolean equals(Object o) {
 		BoardCell cellToCompare = (BoardCell) o;
 		if (this.row == cellToCompare.getRow() && this.col == cellToCompare.getCol()) {
@@ -55,6 +58,7 @@ public class BoardCell {
 		}
 	}
 	
+	// Draws the cells based off if they are a room, walkway, or unused
 	public void draw(Graphics g, int cellXLocation, int cellYLocation, int cellWidth, int cellHeight) {
 
 		// Fills unused squares black
@@ -63,7 +67,7 @@ public class BoardCell {
 			g.fillRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 		}
 		
-		//Fills walkways yellow with black border
+		// Fills walkways yellow with black border
 		else if (this.getInitial() == 'W') {
 			g.setColor(Color.BLACK);
 			g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
@@ -80,8 +84,32 @@ public class BoardCell {
 
 	}
 	
+	public void drawDoors(Graphics g, int cellXLocation, int cellYLocation, int cellWidth, int cellHeight) {
+		
+		g.setColor(Color.BLUE);
+		((Graphics2D) g).setStroke(new BasicStroke(5)); // Set the stroke to be thicker for the doors
+		
+		switch(doorDirection) {
+		case UP:
+			g.drawLine(cellXLocation+2, cellYLocation-1, cellXLocation - 2 + cellWidth, cellYLocation -1);
+			break;
+		case DOWN:
+			g.drawLine(cellXLocation+2, cellYLocation+cellHeight +1, cellXLocation - 2 + cellWidth, cellYLocation+cellHeight +1);
+			break;
+		case LEFT:
+			g.drawLine(cellXLocation-1, cellYLocation+2, cellXLocation -1, cellYLocation +cellHeight -2);
+			break;
+		case RIGHT:
+			g.drawLine(cellXLocation + cellWidth+1, cellYLocation+2, cellXLocation + cellWidth+1, cellYLocation +cellHeight -2);
+			break;
+		}
+	
+		
+	}
+	// Draws the names of the rooms
 	public void drawNames(Graphics g, int cellXLocation, int cellYLocation, String name) {
 		g.setColor(Color.BLUE);
+		g.setFont(new Font("Serif", Font.ITALIC, 16));
 		g.drawString(name, cellXLocation, cellYLocation);
 	}
 	

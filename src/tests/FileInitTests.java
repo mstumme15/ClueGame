@@ -127,39 +127,39 @@ class FileInitTests {
 	@Test
 	public void testCenterLabelCells() {
 		// Bedroom
-		assertTrue(board.getCell(1, 1).isLabel());
+		assertTrue(board.getCell(3, 1).isLabel());
 		assertTrue(board.getCell(2, 1).isRoomCenter());
 		
 		// Office
-		assertTrue(board.getCell(1, 7).isLabel());
+		assertTrue(board.getCell(3, 8).isLabel());
 		assertTrue(board.getCell(2, 8).isRoomCenter());
 		
 		// Kitchen
-		assertTrue(board.getCell(21, 20).isLabel());
+		assertTrue(board.getCell(23, 20).isLabel());
 		assertTrue(board.getCell(22, 21).isRoomCenter());
 		
 		// Living Room
-		assertTrue(board.getCell(1, 16).isLabel());
+		assertTrue(board.getCell(2, 17).isLabel());
 		assertTrue(board.getCell(2, 18).isRoomCenter());
 		
 		// Theater
-		assertTrue(board.getCell(10, 2).isLabel());
+		assertTrue(board.getCell(12, 2).isLabel());
 		assertTrue(board.getCell(11, 2).isRoomCenter());
 		
 		// Laundry Room
-		assertTrue(board.getCell(14, 22).isLabel());
+		assertTrue(board.getCell(15, 21).isLabel());
 		assertTrue(board.getCell(15, 22).isRoomCenter());
 		
 		// Game Room
-		assertTrue(board.getCell(8, 20).isLabel());
+		assertTrue(board.getCell(9, 20).isLabel());
 		assertTrue(board.getCell(9, 21).isRoomCenter());
 		
 		// Sun Room
-		assertTrue(board.getCell(21, 8).isLabel());
+		assertTrue(board.getCell(23, 9).isLabel());
 		assertTrue(board.getCell(22, 9).isRoomCenter());
 		
 		// Green Room
-		assertTrue(board.getCell(21, 3).isLabel());
+		assertTrue(board.getCell(23, 1).isLabel());
 		assertTrue(board.getCell(22, 2).isRoomCenter());
 	}
 

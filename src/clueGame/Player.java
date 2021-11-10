@@ -1,7 +1,9 @@
 package clueGame;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,12 +80,19 @@ public abstract class Player{
 	}
 	
 	public void draw(Graphics g, int cellWidth, int cellHeight) {
+		// Add colors to color map
 		colorMap.put("Blue", Color.BLUE);
 		colorMap.put("Green", Color.GREEN);
 		colorMap.put("Red", Color.RED);
 		colorMap.put("White", Color.WHITE);
 		colorMap.put("Pink", Color.PINK);
 		colorMap.put("Orange", Color.ORANGE);
+		
+		
+		((Graphics2D) g).setStroke(new BasicStroke(2)); // Changes the stroke width of circle
+		
+		
+		// Draw the circle and fill with appropriate color
 		g.setColor(Color.BLACK);
 		g.drawOval(cellWidth*column, cellHeight*row, cellWidth, cellHeight);
 		g.setColor(colorMap.get(color));

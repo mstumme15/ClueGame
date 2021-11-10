@@ -12,6 +12,7 @@ public class ClueGame extends JFrame {
 	private static Board board;
 	
 	public ClueGame() {
+		// Set basic Jframe functionality
 		setTitle("Clue Game");
 		setSize(750,750);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -19,6 +20,7 @@ public class ClueGame extends JFrame {
 		board = Board.getInstance();
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 		board.initialize();
+		
 		
 		GameControlPanel gameControl = new GameControlPanel();
 		

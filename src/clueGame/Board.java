@@ -447,16 +447,20 @@ public class Board extends JPanel {
 			}
 		}
 		
-		// Draw all the room names
+		// Draw all the room names and doors
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
-				if (grid[i][j].isRoomCenter()) {
+				if (grid[i][j].isRoomLabel()) {
 					name = getRoom(grid[i][j]).getName();
 					grid[i][j].drawNames(g, j*cellWidth, i*cellHeight, name);
+				}
+				else if (grid[i][j].isDoorway()) {
+					grid[i][j].drawDoors(g, j*cellWidth, i*cellHeight, cellWidth, cellHeight);
 				}
 			}
 		}
 		
+		// Draw all of the players on the board
 		for (Player player: players) {
 			player.draw(g, cellWidth, cellHeight);
 		}
