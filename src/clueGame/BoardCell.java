@@ -66,6 +66,7 @@ public class BoardCell {
 			g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 			g.setColor(Color.YELLOW);
 			g.fillRect(cellXLocation+1, cellYLocation+1, cellWidth-2, cellHeight-2);
+			
 		}
 		else {
 			g.setColor(Color.GRAY);
