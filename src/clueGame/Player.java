@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -68,6 +70,13 @@ public abstract class Player{
 			int idx = rand.nextInt(numMatches);
 			return match.get(idx);
 		}
+	}
+	
+	public void draw(Graphics g, int cellWidth, int cellHeight) {
+		g.setColor(Color.BLACK);
+		g.drawOval(cellWidth*column, cellHeight*row, cellWidth, cellHeight);
+		g.setColor(Color.getColor(color));
+		g.fillOval(cellWidth*column, cellHeight*row, cellWidth, cellHeight);
 	}
 	
 	public int getRow() {

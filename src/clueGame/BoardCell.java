@@ -56,11 +56,14 @@ public class BoardCell {
 	}
 	
 	public void draw(Graphics g, int cellXLocation, int cellYLocation, int cellWidth, int cellHeight) {
-//		Rectangle currCell = new Rectangle(cellXLocation, cellYLocation, cellWidth, cellHeight);
+
+		// Fills unused squares black
 		if (this.getInitial() == 'X') {
 			g.setColor(Color.BLACK);
 			g.fillRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 		}
+		
+		//Fills walkways yellow with black border
 		else if (this.getInitial() == 'W') {
 			g.setColor(Color.BLACK);
 			g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
@@ -68,11 +71,18 @@ public class BoardCell {
 			g.fillRect(cellXLocation+1, cellYLocation+1, cellWidth-2, cellHeight-2);
 			
 		}
+		
+		// Fills rooms in gray
 		else {
 			g.setColor(Color.GRAY);
 			g.fillRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 		}
-//		g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
+
+	}
+	
+	public void drawNames(Graphics g, int cellXLocation, int cellYLocation, String name) {
+		g.setColor(Color.BLUE);
+		g.drawString(name, cellXLocation, cellYLocation);
 	}
 	
 	// Getters and setters

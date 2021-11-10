@@ -429,16 +429,39 @@ public class Board extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics g) {
+		
 		super.paintComponent(g);
+		
+		String name;
+		
+		// Get the width and height of board to determined cell size
 		boardWidth = this.getWidth();
 		boardHeight = this.getHeight();
 		int cellWidth = boardWidth / numColumns;
 		int cellHeight = boardHeight / numRows;
+		
+		// Draw all of the rooms and walkways
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
 				grid[i][j].draw(g, j*cellWidth, i*cellHeight, cellWidth, cellHeight);
 			}
 		}
+		
+		// Draw all the room names
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				if (grid[i][j].isRoomCenter()) {
+					name = getRoom(grid[i][j]).getName();
+					grid[i][j].drawNames(g, j*cellWidth, i*cellHeight, name);
+				}
+			}
+		}
+		
+		for (Player player: players) {
+			player.draw(g, cellWidth, cellHeight);
+		}
+		
+		
 		
 	}
 	
