@@ -188,6 +188,7 @@ public class ClueCardsPanel extends JPanel {
 					weaponCount++;
 				}
 			}
+			
 			if (peopleCount == 0) {
 				seenPeople = new JTextField(15);
 				seenPeople.setEditable(false);

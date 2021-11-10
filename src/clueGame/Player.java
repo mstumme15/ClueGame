@@ -79,6 +79,7 @@ public abstract class Player{
 		}
 	}
 	
+	// Draws the players on the board based off their location
 	public void draw(Graphics g, int cellWidth, int cellHeight) {
 		// Add colors to color map
 		colorMap.put("Blue", Color.BLUE);

@@ -21,11 +21,13 @@ public class ClueGame extends JFrame {
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 		board.initialize();
 		
-		
+		Player human = board.getPlayers().get(0);
 		GameControlPanel gameControl = new GameControlPanel();
+		ClueCardsPanel cardPanel = new ClueCardsPanel(human.getHand());
 		
 		add(board, BorderLayout.CENTER);
 		add(gameControl, BorderLayout.SOUTH);
+		add(cardPanel, BorderLayout.EAST);
 		
 		
 		
@@ -33,8 +35,6 @@ public class ClueGame extends JFrame {
 	
 	public static void main(String[] args) {
 		
-		
-//		ClueCardsPanel clueCards = new ClueCardsPanel();
 		
 		ClueGame clueGame = new ClueGame();
 		clueGame.setVisible(true);

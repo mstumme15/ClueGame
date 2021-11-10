@@ -84,6 +84,7 @@ public class BoardCell {
 
 	}
 	
+	// Draws the doors based off of the direction of the door
 	public void drawDoors(Graphics g, int cellXLocation, int cellYLocation, int cellWidth, int cellHeight) {
 		
 		g.setColor(Color.BLUE);
