@@ -3,7 +3,10 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+
 
 public abstract class Player{
 
@@ -13,6 +16,7 @@ public abstract class Player{
 	protected int column;
 	protected ArrayList<Card> hand;
 	protected ArrayList<Card> seen;
+	private Map<String, Color> colorMap;
 	
 	public Player(String name, String color, int row, int column) {
 		super();
@@ -22,6 +26,7 @@ public abstract class Player{
 		this.column = column;
 		hand = new ArrayList<Card>();
 		seen = new ArrayList<Card>();
+		colorMap = new HashMap<String, Color>();
 	}
 
 	//Overide the equals method in order to see if list of players contains certain values
@@ -73,9 +78,15 @@ public abstract class Player{
 	}
 	
 	public void draw(Graphics g, int cellWidth, int cellHeight) {
+		colorMap.put("Blue", Color.BLUE);
+		colorMap.put("Green", Color.GREEN);
+		colorMap.put("Red", Color.RED);
+		colorMap.put("White", Color.WHITE);
+		colorMap.put("Pink", Color.PINK);
+		colorMap.put("Orange", Color.ORANGE);
 		g.setColor(Color.BLACK);
 		g.drawOval(cellWidth*column, cellHeight*row, cellWidth, cellHeight);
-		g.setColor(Color.getColor(color));
+		g.setColor(colorMap.get(color));
 		g.fillOval(cellWidth*column, cellHeight*row, cellWidth, cellHeight);
 	}
 	
