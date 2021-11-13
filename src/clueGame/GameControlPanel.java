@@ -116,16 +116,16 @@ public class GameControlPanel extends JPanel {
 		panel.setGuessResult( "So you have nothing?");
 	}
 
-	private void setGuessResult(String string) {
+	public void setGuessResult(String string) {
 		guessResult.setText(string);
 	}
 
-	private void setGuess(String string) {
+	public void setGuess(String string) {
 		guess.setText(string);
 	}
 
-	private void setTurn(ComputerPlayer computerPlayer, int i) {
-		turn.setText(computerPlayer.getName());
+	public void setTurn(Player player, int i) {
+		turn.setText(player.getName());
 		roll.setText(Integer.toString(i));
 	}
 }

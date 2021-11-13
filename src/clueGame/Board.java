@@ -340,6 +340,12 @@ public class Board extends JPanel {
 	
 	// calcTargets - calculates the possible targets on the board given the start cell and the number of moves 
 	public void calcTargets(BoardCell startCell, int moves) {
+		if (targets != null) {
+			for (BoardCell target : targets) {
+				target.setHighlight(false);
+			}
+		}
+		
 		cellsVisited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		
@@ -358,6 +364,7 @@ public class Board extends JPanel {
 				// add adj cell to targets
 				if ((movesLeft == 1 && cellNotOccupied) || adjCell.isRoomCenter()) {
 					targets.add(adjCell);
+					adjCell.setHighlight(true);
 				// Else call findAllTargets with adj cell and one less move
 				} else if (cellNotOccupied) {
 					findAllTargets(adjCell, movesLeft-1);
@@ -464,9 +471,6 @@ public class Board extends JPanel {
 		for (Player player: players) {
 			player.draw(g, cellWidth, cellHeight);
 		}
-		
-		
-		
 	}
 	
 	

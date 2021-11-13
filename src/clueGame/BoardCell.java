@@ -20,6 +20,7 @@ public class BoardCell {
 	private boolean roomCenter = false;
 	private char secretPassage;
 	private Set<BoardCell> adjList;
+	private boolean highlight;
 
 	private boolean occupied = false;
 	
@@ -67,18 +68,28 @@ public class BoardCell {
 			g.fillRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 		}
 		
-		// Fills walkways yellow with black border
+		// Fills walkways yellow or highlighted blue with black border
 		else if (this.getInitial() == 'W') {
 			g.setColor(Color.BLACK);
 			g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
-			g.setColor(Color.YELLOW);
-			g.fillRect(cellXLocation+1, cellYLocation+1, cellWidth-2, cellHeight-2);
+			if (highlight == true) {
+				g.setColor(Color.CYAN);
+			}
+			else {
+				g.setColor(Color.YELLOW);
+			}
+			g.fillRect(cellXLocation+1, cellYLocation+1, cellWidth-1, cellHeight-1);
 			
 		}
 		
 		// Fills rooms in gray
 		else {
-			g.setColor(Color.GRAY);
+			if (highlight == true) {
+				g.setColor(Color.CYAN);
+			}
+			else {
+				g.setColor(Color.GRAY);
+			}
 			g.fillRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
 		}
 
@@ -182,5 +193,9 @@ public class BoardCell {
 	
 	public int getCol() {
 		return col;
+	}
+	
+	public void setHighlight(boolean highlight) {
+		this.highlight = highlight;
 	}
 }
