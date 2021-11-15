@@ -345,11 +345,11 @@ public class Board extends JPanel{
 	
 	// calcTargets - calculates the possible targets on the board given the start cell and the number of moves 
 	public void calcTargets(BoardCell startCell, int moves) {
-		if (targets != null) {
-			for (BoardCell target : targets) {
-				target.setHighlight(false);
-			}
-		}
+//		if (targets != null) {
+//			for (BoardCell target : targets) {
+//				target.setHighlight(false);
+//			}
+//		}
 		
 		cellsVisited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
@@ -563,7 +563,7 @@ public class Board extends JPanel{
 			int col = (int) (x/cellWidth);
 			
 			
-			ClueGame.proccessBoardClick(row, col);
+			ClueGame.processBoardClick(row, col);
 		}
 
 		@Override

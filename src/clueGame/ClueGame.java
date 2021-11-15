@@ -110,8 +110,13 @@ public class ClueGame extends JFrame {
 				}
 				else {
 					BoardCell computerTarget = ((ComputerPlayer) currPlayer).selectTarget(board.getTargets(), board);
+					BoardCell currLocation = board.getCell(currPlayer.getRow(), currPlayer.getColumn());
+					currLocation.setOccupied(false);
+					
+					// Set the new computer target to occupied
 					currPlayer.setRow(computerTarget.getRow());
 					currPlayer.setCol(computerTarget.getCol());
+					computerTarget.setOccupied(true);
 					board.resetTargets();
 					board.repaint();
 				}
@@ -123,20 +128,38 @@ public class ClueGame extends JFrame {
 		}
 	}
 
-	public static void proccessBoardClick(int row, int col) {
+	// Processes when the board is clicked
+	public static void processBoardClick(int row, int col) {
 		Player currPlayer = board.getPlayers().get(currPlayerNum);
 		
+		// Checks to see if it is the human players turn
 		if (currPlayer instanceof HumanPlayer) {
 			Set<BoardCell> targets = board.getTargets();
 			BoardCell click = board.getCell(row, col);
+			
+			//Checks to see if click is one of the targets
 			if (targets.contains(click)) {
+				// Changes the players current location to not occupied
+				BoardCell currLocation = board.getCell(currPlayer.getRow(), currPlayer.getColumn());
+				currLocation.setOccupied(false);
+				
+				// Change player new location to occupied
 				currPlayer.setRow(row);
 				currPlayer.setCol(col);
+				click.setOccupied(true);
 				board.resetTargets();
 				targets.clear();
 				board.setTargets(targets);
+				
+				// Moves the player 
 				board.repaint();
-				humanFinished = true;
+				
+				// Check to see if target clicked was a room
+				if (click.isRoomCenter()) {
+					// TODO make a suggestion
+				}
+				
+				humanFinished = true; // Signals target was selected
 			}
 			
 		}
