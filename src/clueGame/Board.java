@@ -478,6 +478,15 @@ public class Board extends JPanel{
 		}
 	}
 	
+	// Resets the tag for all the targets
+	public void resetTargets() {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				grid[i][j].setHighlight(false);
+			}
+		}
+	}
+	
 	
 	// Getters and setters
 	public Set<BoardCell> getAdjList(int row, int col) {
@@ -486,6 +495,10 @@ public class Board extends JPanel{
 	
 	public Set<BoardCell> getTargets() {
 		return targets;
+	}
+	
+	public void setTargets(Set<BoardCell> targets) {
+		this.targets = targets;
 	}
 	
 	public void setConfigFiles(String layout, String setup) {
@@ -542,13 +555,15 @@ public class Board extends JPanel{
 			// Get the width and height of board to determined cell size
 			int cellWidth = boardWidth / numColumns;
 			int cellHeight = boardHeight / numRows;
+			
 			Point click = e.getPoint();
 			double x = click.getX();
 			double y = click.getY();
-			int cellX = (int) (x/cellWidth);
-			int cellY = (int) (y/cellHeight);
+			int row = (int) (y/cellHeight);
+			int col = (int) (x/cellWidth);
 			
-			ClueGame.proccessBoardClick(cellX, cellY);
+			
+			ClueGame.proccessBoardClick(row, col);
 		}
 
 		@Override

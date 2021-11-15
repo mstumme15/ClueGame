@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -71,7 +72,7 @@ public class ClueGame extends JFrame {
 			// If the current player is the human player
 			if (currPlayer instanceof HumanPlayer) {
 				humanFinished = false;
-				board.paint(board.getGraphics());
+				board.repaint();
 			}
 			else if (currPlayer instanceof ComputerPlayer){
 				ArrayList<Card> deck = board.getDeck();
@@ -111,7 +112,8 @@ public class ClueGame extends JFrame {
 					BoardCell computerTarget = ((ComputerPlayer) currPlayer).selectTarget(board.getTargets(), board);
 					currPlayer.setRow(computerTarget.getRow());
 					currPlayer.setCol(computerTarget.getCol());
-					board.paint(getGraphics());
+					board.resetTargets();
+					board.repaint();
 				}
 				currPlayer.getSeen().size();
 			}
@@ -121,11 +123,22 @@ public class ClueGame extends JFrame {
 		}
 	}
 
-	public static void proccessBoardClick(int x, int y) {
+	public static void proccessBoardClick(int row, int col) {
 		Player currPlayer = board.getPlayers().get(currPlayerNum);
-
+		
 		if (currPlayer instanceof HumanPlayer) {
-			System.out.println(x + " " + y);
+			Set<BoardCell> targets = board.getTargets();
+			BoardCell click = board.getCell(row, col);
+			if (targets.contains(click)) {
+				currPlayer.setRow(row);
+				currPlayer.setCol(col);
+				board.resetTargets();
+				targets.clear();
+				board.setTargets(targets);
+				board.repaint();
+				humanFinished = true;
+			}
+			
 		}
 	}
 
