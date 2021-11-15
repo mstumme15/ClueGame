@@ -113,6 +113,8 @@ public class ClueGame extends JFrame {
 					BoardCell currLocation = board.getCell(currPlayer.getRow(), currPlayer.getColumn());
 					currLocation.setOccupied(false);
 					
+					// TODO computer makes suggestion if in room
+					
 					// Set the new computer target to occupied
 					currPlayer.setRow(computerTarget.getRow());
 					currPlayer.setCol(computerTarget.getCol());
