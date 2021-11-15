@@ -87,7 +87,7 @@ public class ClueGame extends JFrame {
 					}
 				}
 
-				if (notSeen.size() == 3) {
+				if (notSeen.size() == 3) { // Make accusation if only 3 cards are not seen
 					Card roomAccuse = null;
 					Card personAccuse = null;
 					Card weaponAccuse = null;
@@ -108,7 +108,7 @@ public class ClueGame extends JFrame {
 						// TODO exit game or prompt to play again
 					}
 				}
-				else {
+				else { // Move computer player
 					BoardCell computerTarget = ((ComputerPlayer) currPlayer).selectTarget(board.getTargets(), board);
 					BoardCell currLocation = board.getCell(currPlayer.getRow(), currPlayer.getColumn());
 					currLocation.setOccupied(false);
