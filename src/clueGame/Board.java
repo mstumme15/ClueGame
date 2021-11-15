@@ -1,6 +1,9 @@
 package clueGame;
 
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 
-public class Board extends JPanel {
+public class Board extends JPanel{
 	
 	// Instance variables
 	private BoardCell[][] grid;
@@ -40,6 +43,7 @@ public class Board extends JPanel {
 	// Default constructor - private because of singleton pattern
 	private Board() {
 		super();
+		addMouseListener(new BoardClicked());
 	}
 	
 	// getInstance - sets up the one board instance
@@ -62,6 +66,7 @@ public class Board extends JPanel {
 		}
 		calcAdjacencies();
 		deal();
+		
 		
 	}
 	
@@ -528,4 +533,40 @@ public class Board extends JPanel {
 	public void setAnswer(Card room, Card person, Card weapon) {
 		theAnswer = new Solution(room,person,weapon);
 	}
-}
+
+	// Mouse events
+	private class BoardClicked implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// Get the width and height of board to determined cell size
+			int cellWidth = boardWidth / numColumns;
+			int cellHeight = boardHeight / numRows;
+			Point click = e.getPoint();
+			double x = click.getX();
+			double y = click.getY();
+			int cellX = (int) (x/cellWidth);
+			int cellY = (int) (y/cellHeight);
+			
+			ClueGame.proccessBoardClick(cellX, cellY);
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {}
+
+
+		@Override
+		public void mouseExited(MouseEvent e) {}
+			
+		}
+		
+	}
+	
+
+

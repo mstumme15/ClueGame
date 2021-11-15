@@ -53,15 +53,18 @@ public class ClueGame extends JFrame {
 
 		// If the human player has finished their turn 
 		if (humanFinished) {
+			
 			// Go to next player
 			currPlayerNum = (currPlayerNum + 1) % NUM_PLAYERS;
 			currPlayer = board.getPlayers().get(currPlayerNum);
 			int roll = rollDice();
 			int playerRow = currPlayer.getRow();
 			int playerCol = currPlayer.getColumn();
+			
 			// Calculate targets for current player
 			BoardCell playerLoc = board.getCell(playerRow, playerCol);
 			board.calcTargets(playerLoc, roll);
+			
 			// Update game control panel with new player and roll
 			gameControl.setTurn(currPlayer, roll);
 
@@ -118,6 +121,13 @@ public class ClueGame extends JFrame {
 		}
 	}
 
+	public static void proccessBoardClick(int x, int y) {
+		Player currPlayer = board.getPlayers().get(currPlayerNum);
+
+		if (currPlayer instanceof HumanPlayer) {
+			System.out.println(x + " " + y);
+		}
+	}
 
 	public static void main(String[] args) {
 		ClueGame clueGame = new ClueGame();
