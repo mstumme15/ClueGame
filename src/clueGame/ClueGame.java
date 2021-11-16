@@ -113,14 +113,26 @@ public class ClueGame extends JFrame {
 					BoardCell currLocation = board.getCell(currPlayer.getRow(), currPlayer.getColumn());
 					currLocation.setOccupied(false);
 					
-					// TODO computer makes suggestion if in room
-					
 					// Set the new computer target to occupied
 					currPlayer.setRow(computerTarget.getRow());
 					currPlayer.setCol(computerTarget.getCol());
 					computerTarget.setOccupied(true);
 					board.resetTargets();
 					board.repaint();
+					
+					// computer makes suggestion if in room
+					if (computerTarget.isRoomCenter()) {
+						Solution suggestion = ((ComputerPlayer) currPlayer).createSuggestion(board);
+						Card disprove = board.handleSuggestion(suggestion.getRoom(), suggestion.getPerson(), suggestion.getWeapon(), currPlayer, gameControl);
+						if (disprove == null) {
+							((ComputerPlayer) currPlayer).setMakeAccusation(true);
+						}
+						else {
+							currPlayer.updateSeen(disprove);
+						}
+					}
+					
+					
 				}
 				currPlayer.getSeen().size();
 			}

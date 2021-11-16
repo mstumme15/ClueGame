@@ -100,6 +100,10 @@ public abstract class Player{
 		g.fillOval(cellWidth*column, cellHeight*row, cellWidth, cellHeight);
 	}
 	
+	public Color getColor() {
+		return colorMap.get(color);
+	}
+
 	public int getRow() {
 		return row;
 	}

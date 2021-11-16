@@ -8,6 +8,7 @@ import java.util.Set;
 
 
 public class ComputerPlayer extends Player {
+	private boolean makeAccusation;
 	public ComputerPlayer(String name, String color, int row, int column) {
 		super(name, color, row, column);
 	}
@@ -75,4 +76,13 @@ public class ComputerPlayer extends Player {
 		}
 		
 	}
+
+	public boolean isMakeAccusation() {
+		return makeAccusation;
+	}
+
+	public void setMakeAccusation(boolean makeAccusation) {
+		this.makeAccusation = makeAccusation;
+	}
+	
 }

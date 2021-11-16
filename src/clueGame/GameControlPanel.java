@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -144,5 +145,9 @@ public class GameControlPanel extends JPanel {
 		currPlayer = player;
 		turn.setText(player.getName());
 		roll.setText(Integer.toString(i));
+	}
+	
+	public void setResultColor(Color color) {
+		guessResult.setBackground(color);
 	}
 }

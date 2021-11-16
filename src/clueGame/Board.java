@@ -422,9 +422,22 @@ public class Board extends JPanel{
 	}
 	
 	// Returns the card that can disprove a suggestions
-	public Card handleSuggestion(Card room, Card person, Card weapon, Player suggestingPlayer) {
+	public Card handleSuggestion(Card room, Card person, Card weapon, Player suggestingPlayer, GameControlPanel gameControl) {
 		
-		Card card;
+		Card card = null;
+		// Moves the player that is suggested
+		for (Player player: players) {
+			if (player.getName().equals(person.getName())) {
+				
+				grid[player.getRow()][player.getColumn()].setOccupied(false);
+				player.setCol(suggestingPlayer.getColumn());
+				player.setRow(suggestingPlayer.getRow());
+				repaint();
+			}
+		}
+		
+		Player disprovingPlayer = null;
+		// Disproves the card if possible
 		for (Player player: players) {
 			if (player.equals(suggestingPlayer)) {
 				continue;
@@ -433,10 +446,29 @@ public class Board extends JPanel{
 				card = player.disproveSuggestion(room, person, weapon);
 			}
 			if(card != null) {
-				return card;
+				disprovingPlayer = player;
+				break;
 			}
 		}
-		return null;
+		
+		String guess = person.getName() + "," + room.getName() + "," + weapon.getName();
+		gameControl.setGuess(guess);
+		
+		// Updates the control panel
+		if (card == null) {
+			gameControl.setGuessResult("Not disproven!");
+			return null;
+		}
+		else if (suggestingPlayer instanceof HumanPlayer) {
+			String guessResult = card.getName();
+			gameControl.setGuessResult(guessResult);
+			return card;
+		}
+		else {
+			gameControl.setResultColor(disprovingPlayer.getColor());
+			gameControl.setGuessResult("Suggestion Disproven!");
+			return card;
+		}
 	}
 	
 	@Override
