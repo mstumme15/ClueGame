@@ -52,7 +52,10 @@ public abstract class Player{
 	
 	// Updates the seen cards
 	public void updateSeen(Card card) {
-		seen.add(card);
+		if (!seen.contains(card)) {
+			seen.add(card);
+		}
+		
 	}
 	
 	// Disproves a player suggestion or returns null

@@ -150,4 +150,8 @@ public class GameControlPanel extends JPanel {
 	public void setResultColor(Color color) {
 		guessResult.setBackground(color);
 	}
+	
+	public void setTurnColor(Color color) {
+		turn.setBackground(color);
+	}
 }

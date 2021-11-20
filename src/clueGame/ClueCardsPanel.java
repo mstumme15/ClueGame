@@ -67,6 +67,9 @@ public class ClueCardsPanel extends JPanel {
 		rooms.add(roomsInHand);
 		weapons.add(weaponsInHand);
 		
+		updateSeen(new ArrayList<Card>());
+		
+		
 		people.setBorder(new TitledBorder (new EtchedBorder(), "People"));
 		rooms.setBorder(new TitledBorder (new EtchedBorder(), "Rooms"));
 		weapons.setBorder(new TitledBorder (new EtchedBorder(), "Weapons"));
@@ -116,110 +119,96 @@ public class ClueCardsPanel extends JPanel {
 	// Check card type, then add to peopleSeen, roomsSeen, or weaponsSeen
 	// Then add peopleSeen, roomsSeen, and weaponsSeen to people, rooms, and weapons
 	public void updateSeen(ArrayList<Card> seenCards) {
+		
+		
+		// Removes the current layout of cards
 		people.remove(peopleSeen);
 		rooms.remove(roomsSeen);
 		weapons.remove(weaponsSeen);
 		
+		peopleSeen = new JPanel();
+		roomsSeen = new JPanel();
+		weaponsSeen = new JPanel();
+		
+		// Adds Space for seen cards
 		JLabel seenPeopleLabel = new JLabel("Seen:");
 		JLabel seenRoomsLabel = new JLabel("Seen:");
 		JLabel seenWeaponsLabel = new JLabel("Seen:");
-		
 		
 		peopleSeen.add(seenPeopleLabel);
 		roomsSeen.add(seenRoomsLabel);
 		weaponsSeen.add(seenWeaponsLabel);
 		
-		// Initially, no cards have been seen by the player
-		if (seenCards.size() == 0) {
-			
-			JTextField seenNoPeople = new JTextField(15);
-			JTextField seenNoRooms = new JTextField(15);
-			JTextField seenNoWeapons = new JTextField(15);
-			
-			seenNoPeople.setEditable(false);
-			seenNoPeople.setText("None");
-			seenNoRooms.setEditable(false);
-			seenNoRooms.setText("None");
-			seenNoWeapons.setEditable(false);
-			seenNoWeapons.setText("None");
-			
-			peopleSeen.add(seenNoPeople);
-			roomsSeen.add(seenNoRooms);
-			weaponsSeen.add(seenNoWeapons);
-			
-			people.add(peopleSeen);
-			rooms.add(roomsSeen);
-			weapons.add(weaponsSeen);
-			
-			add(people);
-			add(rooms);
-			add(weapons);
-		}
-		else {
-			JTextField seenPeople;
-			JTextField seenRooms;
-			JTextField seenWeapons;
-			
-			int peopleCount = 0;
-			int roomCount = 0;
-			int weaponCount = 0;
-			
-			
-			for (Card seen: seenCards) {
-				if (seen.getType() == CardType.PERSON) {
-					seenPeople = new JTextField(15);
-					seenPeople.setEditable(false);
-					seenPeople.setText(seen.getName());
-					peopleSeen.add(seenPeople);
-					peopleCount++;
-				}
-				else if (seen.getType() == CardType.ROOM) {
-					seenRooms = new JTextField(15);
-					seenRooms.setEditable(false);
-					seenRooms.setText(seen.getName());
-					roomsSeen.add(seenRooms);
-					roomCount++;
-				}
-				else {
-					seenWeapons = new JTextField(15);
-					seenWeapons.setEditable(false);
-					seenWeapons.setText(seen.getName());
-					weaponsSeen.add(seenWeapons);
-					weaponCount++;
-				}
-			}
-			
-			if (peopleCount == 0) {
+		JTextField seenPeople = new JTextField(15);;
+		JTextField seenRooms = new JTextField(15);;
+		JTextField seenWeapons = new JTextField(15);;
+		
+		int peopleCount = 0;
+		int roomCount = 0;
+		int weaponCount = 0;
+		
+		// Goes through each seen cards and adds them
+		for (Card seen: seenCards) {
+			if (seen.getType() == CardType.PERSON) {
 				seenPeople = new JTextField(15);
 				seenPeople.setEditable(false);
-				seenPeople.setText("None");
+				seenPeople.setText(seen.getName());
 				peopleSeen.add(seenPeople);
 				peopleCount++;
 			}
-			else if (roomCount == 0) {
+			else if (seen.getType() == CardType.ROOM) {
 				seenRooms = new JTextField(15);
 				seenRooms.setEditable(false);
-				seenRooms.setText("None");
+				seenRooms.setText(seen.getName());
 				roomsSeen.add(seenRooms);
 				roomCount++;
 			}
-			else if (weaponCount == 0) {
+			else {
 				seenWeapons = new JTextField(15);
 				seenWeapons.setEditable(false);
-				seenWeapons.setText("None");
+				seenWeapons.setText(seen.getName());
 				weaponsSeen.add(seenWeapons);
 				weaponCount++;
 			}
-			
-			peopleSeen.setLayout(new GridLayout(peopleCount+1, 0));
-			roomsSeen.setLayout(new GridLayout(roomCount+1, 0));
-			weaponsSeen.setLayout(new GridLayout(weaponCount+1, 0));
-			
-			people.add(peopleSeen);
-			rooms.add(roomsSeen);
-			weapons.add(weaponsSeen);
-			
 		}
+		
+		
+		// Checks to see if room,person, or weapon is empty
+		if (peopleCount == 0) {
+			seenPeople = new JTextField(15);
+			seenPeople.setEditable(false);
+			seenPeople.setText("None");
+			peopleSeen.add(seenPeople);
+			peopleCount++;
+		}
+		if (roomCount == 0) {
+			seenRooms = new JTextField(15);
+			seenRooms.setEditable(false);
+			seenRooms.setText("None");
+			roomsSeen.add(seenRooms);
+			roomCount++;
+		}
+		if (weaponCount == 0) {
+			seenWeapons = new JTextField(15);
+			seenWeapons.setEditable(false);
+			seenWeapons.setText("None");
+			weaponsSeen.add(seenWeapons);
+			weaponCount++;
+		}
+		
+		// Resets the layout based on number of cards
+		peopleSeen.setLayout(new GridLayout(peopleCount+1, 1));
+		roomsSeen.setLayout(new GridLayout(roomCount+1, 1));
+		weaponsSeen.setLayout(new GridLayout(weaponCount+1, 1));
+		
+		
+		// Adds the panels and repaints them
+		people.add(peopleSeen);
+		rooms.add(roomsSeen);
+		weapons.add(weaponsSeen);
+		revalidate();
+		repaint();
+			
 	}
 	
 	/**

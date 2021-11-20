@@ -1,15 +1,23 @@
 package clueGame;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class ClueGame extends JFrame {
 
@@ -18,6 +26,13 @@ public class ClueGame extends JFrame {
 	private static int currPlayerNum;
 	private static GameControlPanel gameControl;
 	private static ClueCardsPanel cardPanel;
+	private static SuggestionPanel suggestion;
+	private JTextField room;
+	private Card currentRoom;
+	private ArrayList<Card> deck;
+	
+	private JComboBox<Card> people;
+	private JComboBox<Card> weapons;
 	private static boolean humanFinished;
 	private static final int NUM_PLAYERS = 6;
 
@@ -37,10 +52,12 @@ public class ClueGame extends JFrame {
 		human = board.getPlayers().get(0);
 		gameControl = new GameControlPanel(this);
 		cardPanel = new ClueCardsPanel(human.getHand());
+		suggestion = new SuggestionPanel();
 
 		add(board, BorderLayout.CENTER);
 		add(gameControl, BorderLayout.SOUTH);
 		add(cardPanel, BorderLayout.EAST);
+
 	}
 
 	public int rollDice() {
@@ -58,6 +75,7 @@ public class ClueGame extends JFrame {
 			// Go to next player
 			currPlayerNum = (currPlayerNum + 1) % NUM_PLAYERS;
 			currPlayer = board.getPlayers().get(currPlayerNum);
+			gameControl.setTurnColor(currPlayer.getColor());
 			int roll = rollDice();
 			int playerRow = currPlayer.getRow();
 			int playerCol = currPlayer.getColumn();
@@ -170,7 +188,8 @@ public class ClueGame extends JFrame {
 				
 				// Check to see if target clicked was a room
 				if (click.isRoomCenter()) {
-					// TODO make a suggestion
+					suggestion.setRoom(board.getRoom(click).getName());
+					suggestion.setVisible(true);
 				}
 				
 				humanFinished = true; // Signals target was selected
@@ -178,6 +197,92 @@ public class ClueGame extends JFrame {
 			
 		}
 	}
+	
+	private class SuggestionPanel extends JDialog {
+		public SuggestionPanel() {
+			setTitle("Make a suggestion");
+			setSize(300,200);
+			setLayout(new GridLayout(4,2));
+			JLabel roomLabel = new JLabel("Room");
+			JLabel personLabel = new JLabel("Person");
+			JLabel weaponLabel = new JLabel("Weapon");
+			
+			room = new JTextField();
+			room.setEditable(false);
+			people = new JComboBox<Card>();
+			weapons = new JComboBox<Card>();
+			
+			JButton submit = new JButton("Submit");
+			JButton cancel = new JButton("Cancel");
+			
+			submit.addActionListener(new ButtonListener());
+			cancel.addActionListener(new ButtonListener());
+			
+			deck = board.getDeck();
+			
+			for (Card card: deck) {
+				if (card.getType() == CardType.PERSON) {
+					people.addItem(card);
+				}
+				else if (card.getType() == CardType.WEAPON) {
+					weapons.addItem(card);
+				}
+			}
+			
+			add(roomLabel);
+			add(room);
+			add(personLabel);
+			add(people);
+			add(weaponLabel);
+			add(weapons);
+			add(cancel);
+			add(submit);
+			setVisible(false);
+			setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		}
+		
+		
+		// Getters and setters
+		public void setRoom(String roomName) {
+			room.setText(roomName);
+		}
+		
+		public Card getPerson() {
+			return (Card) people.getSelectedItem();
+		}
+		
+		public Card getWeapon() {
+			return (Card) weapons.getSelectedItem();
+		}
+		
+		public Card getRoom() {
+			for (Card card: deck) {
+				if (room.getText().equals(card.getName())){
+					return card;
+				}
+			}
+			return null;
+		}
+		
+		
+		
+		public class ButtonListener implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				suggestion.setVisible(false);
+				Card disprove = board.handleSuggestion(getPerson(), getRoom(), getWeapon(), human, gameControl);
+				
+				human.updateSeen(disprove);
+				cardPanel.updateSeen(human.getSeen());
+				
+			}
+			
+		}
+		
+	}
+	
+	
 
 	public static void main(String[] args) {
 		ClueGame clueGame = new ClueGame();
