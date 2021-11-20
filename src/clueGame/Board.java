@@ -462,6 +462,7 @@ public class Board extends JPanel{
 		else if (suggestingPlayer instanceof HumanPlayer) {
 			String guessResult = card.getName();
 			gameControl.setGuessResult(guessResult);
+			gameControl.setResultColor(disprovingPlayer.getColor());
 			return card;
 		}
 		else {

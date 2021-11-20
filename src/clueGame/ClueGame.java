@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -76,6 +77,9 @@ public class ClueGame extends JFrame {
 			currPlayerNum = (currPlayerNum + 1) % NUM_PLAYERS;
 			currPlayer = board.getPlayers().get(currPlayerNum);
 			gameControl.setTurnColor(currPlayer.getColor());
+			gameControl.setGuess("");
+			gameControl.setGuessResult("");
+			gameControl.setResultColor(Color.WHITE);
 			int roll = rollDice();
 			int playerRow = currPlayer.getRow();
 			int playerCol = currPlayer.getColumn();
