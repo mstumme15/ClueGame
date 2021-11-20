@@ -215,8 +215,8 @@ public class ClueGame extends JFrame {
 			JButton submit = new JButton("Submit");
 			JButton cancel = new JButton("Cancel");
 			
-			submit.addActionListener(new ButtonListener());
-			cancel.addActionListener(new ButtonListener());
+			submit.addActionListener(new SubmitListener());
+			cancel.addActionListener(new CancelListener());
 			
 			deck = board.getDeck();
 			
@@ -266,7 +266,7 @@ public class ClueGame extends JFrame {
 		
 		
 		
-		public class ButtonListener implements ActionListener{
+		public class SubmitListener implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -275,6 +275,16 @@ public class ClueGame extends JFrame {
 				
 				human.updateSeen(disprove);
 				cardPanel.updateSeen(human.getSeen());
+				
+			}
+			
+		}
+		
+		public class CancelListener implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				suggestion.setVisible(false);
 				
 			}
 			

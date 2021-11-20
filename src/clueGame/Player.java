@@ -55,7 +55,6 @@ public abstract class Player{
 		if (!seen.contains(card)) {
 			seen.add(card);
 		}
-		
 	}
 	
 	// Disproves a player suggestion or returns null
