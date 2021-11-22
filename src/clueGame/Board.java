@@ -344,18 +344,42 @@ public class Board extends JPanel{
 	}
 	
 	// calcTargets - calculates the possible targets on the board given the start cell and the number of moves 
-	public void calcTargets(BoardCell startCell, int moves) {
-//		if (targets != null) {
-//			for (BoardCell target : targets) {
-//				target.setHighlight(false);
-//			}
-//		}
+	public void calcTargets(BoardCell startCell, int moves, Player player) {
 		
 		cellsVisited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		
 		cellsVisited.add(startCell);
 		findAllTargets(startCell, moves);
+		
+		// Allow the player to choose the room if they were moved there
+		if(player.isMoved()) {
+			targets.add(grid[player.getRow()][player.getColumn()]);
+			player.setMoved(false);
+		}
+		
+		// Get the initials of the rooms that should be highlighted
+		ArrayList<Character> roomInitials = new ArrayList<Character>();
+		for(BoardCell target: targets) {
+			if (target.isRoomCenter()) {
+				roomInitials.add(target.getInitial());
+			}
+		}
+		
+		// Highlight the rooms that are targets
+		for(Character initial: roomInitials) {
+			for (int i = 0; i < numRows; i++) {
+				for (int j = 0; j < numColumns; j++) {
+					if(grid[i][j].getInitial() == initial) {
+						grid[i][j].setHighlight(true);
+					}
+					
+				}
+			}
+		}
+		
+		
+		
 	}
 	
 	// findAllTargets - recursive method to find all targets
@@ -425,6 +449,7 @@ public class Board extends JPanel{
 	public Card handleSuggestion(Card room, Card person, Card weapon, Player suggestingPlayer, GameControlPanel gameControl) {
 		
 		Card card = null;
+		
 		// Moves the player that is suggested
 		for (Player player: players) {
 			if (player.getName().equals(person.getName())) {
@@ -432,6 +457,7 @@ public class Board extends JPanel{
 				grid[player.getRow()][player.getColumn()].setOccupied(false);
 				player.setCol(suggestingPlayer.getColumn());
 				player.setRow(suggestingPlayer.getRow());
+				player.setMoved(true);
 				repaint();
 			}
 		}
@@ -492,6 +518,7 @@ public class Board extends JPanel{
 			}
 		}
 		
+		
 		// Draw all the room names and doors
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
@@ -504,6 +531,8 @@ public class Board extends JPanel{
 				}
 			}
 		}
+		
+		
 		
 		// Draw all of the players on the board
 		for (Player player: players) {

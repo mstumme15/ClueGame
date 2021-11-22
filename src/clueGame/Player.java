@@ -18,6 +18,8 @@ public abstract class Player{
 	protected int column;
 	protected ArrayList<Card> hand;
 	protected ArrayList<Card> seen;
+	private boolean inRoom;
+	private boolean moved;
 	private Map<String, Color> colorMap;
 	
 	public Player(String name, String color, int row, int column) {
@@ -129,4 +131,13 @@ public abstract class Player{
 	public ArrayList<Card> getSeen() {
 		return seen;
 	}
+
+	public boolean isMoved() {
+		return moved;
+	}
+
+	public void setMoved(boolean moved) {
+		this.moved = moved;
+	}
+	
 }

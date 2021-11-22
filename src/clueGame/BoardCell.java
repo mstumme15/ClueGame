@@ -198,4 +198,8 @@ public class BoardCell {
 	public void setHighlight(boolean highlight) {
 		this.highlight = highlight;
 	}
+	
+	public boolean isHighlighted() {
+		return highlight;
+	}
 }

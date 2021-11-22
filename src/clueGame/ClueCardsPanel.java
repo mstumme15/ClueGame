@@ -149,7 +149,10 @@ public class ClueCardsPanel extends JPanel {
 		
 		// Goes through each seen cards and adds them
 		for (Card seen: seenCards) {
-			if (seen.getType() == CardType.PERSON) {
+			if (seen == null) {
+				break;
+			}
+			else if (seen.getType() == CardType.PERSON) {
 				seenPeople = new JTextField(15);
 				seenPeople.setEditable(false);
 				seenPeople.setText(seen.getName());

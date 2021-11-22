@@ -29,6 +29,7 @@ public class ClueGame extends JFrame {
 	private static ClueCardsPanel cardPanel;
 	private static SuggestionPanel suggestion;
 	protected static AccusationPanel accusation;
+	private static ClueGame clueGame;
 	private JTextField room;
 	private Card currentRoom;
 	private ArrayList<Card> deck;
@@ -91,7 +92,7 @@ public class ClueGame extends JFrame {
 			
 			// Calculate targets for current player
 			BoardCell playerLoc = board.getCell(playerRow, playerCol);
-			board.calcTargets(playerLoc, roll);
+			board.calcTargets(playerLoc, roll, currPlayer);
 			
 			// Update game control panel with new player and roll
 			gameControl.setTurn(currPlayer, roll);
@@ -114,22 +115,8 @@ public class ClueGame extends JFrame {
 					}
 				}
 
-				if (notSeen.size() == 3) { // Make accusation if only 3 cards are not seen
-					Card roomAccuse = null;
-					Card personAccuse = null;
-					Card weaponAccuse = null;
-					for (Card card : notSeen) {
-						if (card.getType() == CardType.ROOM) {
-							roomAccuse = card;
-						}
-						else if (card.getType() == CardType.PERSON) {
-							personAccuse = card;
-						}
-						else {
-							weaponAccuse = card;
-						}
-					}
-					Solution accusation = new Solution(roomAccuse, personAccuse, weaponAccuse);
+				if (((ComputerPlayer) currPlayer).isMakeAccusation()) { // Make accusation if flag set
+					Solution accusation = ((ComputerPlayer) currPlayer).getAccusation();
 					if (board.checkAccusation(accusation)) {
 						JOptionPane.showMessageDialog(this, currPlayer.getName()+" successfully guessed the solution.");
 						System.exit(0);
@@ -153,6 +140,7 @@ public class ClueGame extends JFrame {
 						Card disprove = board.handleSuggestion(suggestion.getRoom(), suggestion.getPerson(), suggestion.getWeapon(), currPlayer, gameControl);
 						if (disprove == null) {
 							((ComputerPlayer) currPlayer).setMakeAccusation(true);
+							((ComputerPlayer) currPlayer).setAccusation(suggestion);
 						}
 						else {
 							currPlayer.updateSeen(disprove);
@@ -179,27 +167,44 @@ public class ClueGame extends JFrame {
 			BoardCell click = board.getCell(row, col);
 			
 			//Checks to see if click is one of the targets
-			if (targets.contains(click)) {
+			if (click.isHighlighted()) {
 				// Changes the players current location to not occupied
 				BoardCell currLocation = board.getCell(currPlayer.getRow(), currPlayer.getColumn());
 				currLocation.setOccupied(false);
 				
-				// Change player new location to occupied
-				currPlayer.setRow(row);
-				currPlayer.setCol(col);
-				click.setOccupied(true);
-				board.resetTargets();
-				targets.clear();
-				board.setTargets(targets);
-				
-				// Moves the player 
-				board.repaint();
-				
 				// Check to see if target clicked was a room
-				if (click.isRoomCenter()) {
+				if (click.getInitial() != 'W' && click.getInitial() != 'X') {
+					BoardCell newLocation = board.getRoom(click).getCenterCell();
+					currPlayer.setRow(newLocation.getRow());
+					currPlayer.setCol(newLocation.getCol());
+		
+					board.resetTargets();
+					targets.clear();
+					board.setTargets(targets);
+					
+					// Moves the player 
+					board.repaint();
+					
+					// Bring up suggestion panel
 					suggestion.setRoom(board.getRoom(click).getName());
+					suggestion.setLocationRelativeTo(board);
 					suggestion.setVisible(true);
 				}
+				else{
+					// Change player new location to occupied
+					currPlayer.setRow(row);
+					currPlayer.setCol(col);
+					click.setOccupied(true);
+					board.resetTargets();
+					targets.clear();
+					board.setTargets(targets);
+					
+					// Moves the player 
+					board.repaint();
+				}
+				
+				
+				
 				
 				humanFinished = true; // Signals target was selected
 			}
@@ -295,6 +300,7 @@ public class ClueGame extends JFrame {
 		public AccusationPanel() {
 			setTitle("Make an accusation");
 			setSize(300,200);
+			setLocationRelativeTo(board);
 			setLayout(new GridLayout(4,2));
 			JLabel roomLabel = new JLabel("Room");
 			JLabel personLabel = new JLabel("Person");
@@ -385,7 +391,7 @@ public class ClueGame extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		ClueGame clueGame = new ClueGame();
+		clueGame = new ClueGame();
 		clueGame.setVisible(true);
 
 		// Print opening message dialog
