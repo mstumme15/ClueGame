@@ -28,12 +28,16 @@ public class ClueGame extends JFrame {
 	private static GameControlPanel gameControl;
 	private static ClueCardsPanel cardPanel;
 	private static SuggestionPanel suggestion;
+	protected static AccusationPanel accusation;
 	private JTextField room;
 	private Card currentRoom;
 	private ArrayList<Card> deck;
 	
 	private JComboBox<Card> people;
 	private JComboBox<Card> weapons;
+	private JComboBox<Card> accuseRooms;
+	private JComboBox<Card> accusePeople;
+	private JComboBox<Card> accuseWeapons;
 	private static boolean humanFinished;
 	private static final int NUM_PLAYERS = 6;
 
@@ -54,6 +58,7 @@ public class ClueGame extends JFrame {
 		gameControl = new GameControlPanel(this);
 		cardPanel = new ClueCardsPanel(human.getHand());
 		suggestion = new SuggestionPanel();
+		accusation = new AccusationPanel();
 
 		add(board, BorderLayout.CENTER);
 		add(gameControl, BorderLayout.SOUTH);
@@ -127,7 +132,7 @@ public class ClueGame extends JFrame {
 					Solution accusation = new Solution(roomAccuse, personAccuse, weaponAccuse);
 					if (board.checkAccusation(accusation)) {
 						JOptionPane.showMessageDialog(this, currPlayer.getName()+" successfully guessed the solution.");
-						// TODO exit game or prompt to play again
+						System.exit(0);
 					}
 				}
 				else { // Move computer player
@@ -245,7 +250,6 @@ public class ClueGame extends JFrame {
 			setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		}
 		
-		
 		// Getters and setters
 		public void setRoom(String roomName) {
 			room.setText(roomName);
@@ -268,35 +272,117 @@ public class ClueGame extends JFrame {
 			return null;
 		}
 		
-		
-		
 		public class SubmitListener implements ActionListener{
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				suggestion.setVisible(false);
-				Card disprove = board.handleSuggestion(getPerson(), getRoom(), getWeapon(), human, gameControl);
+				Card disprove = board.handleSuggestion(getRoom(), getPerson(), getWeapon(), human, gameControl);
 				
 				human.updateSeen(disprove);
 				cardPanel.updateSeen(human.getSeen());
-				
 			}
-			
 		}
 		
 		public class CancelListener implements ActionListener{
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				suggestion.setVisible(false);
-				
 			}
-			
 		}
-		
 	}
 	
-	
+	class AccusationPanel extends JDialog {
+		public AccusationPanel() {
+			setTitle("Make an accusation");
+			setSize(300,200);
+			setLayout(new GridLayout(4,2));
+			JLabel roomLabel = new JLabel("Room");
+			JLabel personLabel = new JLabel("Person");
+			JLabel weaponLabel = new JLabel("Weapon");
+			
+			accuseRooms = new JComboBox<Card>();
+			accusePeople = new JComboBox<Card>();
+			accuseWeapons = new JComboBox<Card>();
+			
+			JButton submit = new JButton("Submit");
+			JButton cancel = new JButton("Cancel");
+			
+			submit.addActionListener(new SubmitListener());
+			cancel.addActionListener(new CancelListener());
+			
+			deck = board.getDeck();
+			
+			for (Card card: deck) {
+				if (card.getType() == CardType.PERSON) {
+					accusePeople.addItem(card);
+				}
+				else if (card.getType() == CardType.WEAPON) {
+					accuseWeapons.addItem(card);
+				}
+				else if (card.getType() == CardType.ROOM) {
+					accuseRooms.addItem(card);
+				}
+			}
+			
+			add(roomLabel);
+			add(accuseRooms);
+			add(personLabel);
+			add(accusePeople);
+			add(weaponLabel);
+			add(accuseWeapons);
+			add(cancel);
+			add(submit);
+			setVisible(false);
+			setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		}
+		
+		// Getters and setters
+		public Card getPerson() {
+			return (Card) accusePeople.getSelectedItem();
+		}
+		
+		public Card getWeapon() {
+			return (Card) accuseWeapons.getSelectedItem();
+		}
+		
+		public Card getRoom() {
+			return (Card) accuseRooms.getSelectedItem();
+		}
+		
+		public void setVisibilityTrue() {
+			if (board.getPlayers().get(currPlayerNum) instanceof HumanPlayer && humanFinished == false) {
+				accusation.setVisible(true);
+			}
+			else {
+				JOptionPane.showMessageDialog(getRootPane(), "You can only make an accusation at the beginning of your turn.");
+			}
+		}
+		
+		public class SubmitListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				accusation.setVisible(false);
+				Solution accusation = new Solution(getRoom(), getPerson(), getWeapon());
+				boolean playerWon = board.checkAccusation(accusation);
+				String accusationStr = accuseRooms.getSelectedItem() + ", " + accusePeople.getSelectedItem() + ", " + accuseWeapons.getSelectedItem();
+				if (playerWon) {
+					JOptionPane.showMessageDialog(getRootPane(), "Congratulations, " + accusationStr + " was correct! You won!");
+					System.exit(0);
+				}
+				else {
+					JOptionPane.showMessageDialog(getRootPane(), "Sorry, " + accusationStr + " was incorrect. You lost.");
+					System.exit(0);
+				}
+			}
+		}
+		
+		public class CancelListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				accusation.setVisible(false);
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		ClueGame clueGame = new ClueGame();
@@ -307,7 +393,5 @@ public class ClueGame extends JFrame {
 
 		// Process initial turn
 		clueGame.processNext(board.getPlayers().get(currPlayerNum));
-
 	}
-
 }

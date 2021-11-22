@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import clueGame.ClueGame.AccusationPanel;
+
 public class GameControlPanel extends JPanel {
 
 	private JTextField turn;
@@ -63,11 +65,12 @@ public class GameControlPanel extends JPanel {
 		
 		//Create Accusation button
 		JButton accusation = new JButton("Make Accusation");
+		accusation.addActionListener(new AccusationListener());
 		
 		
 		//Create next button
 		JButton next = new JButton("NEXT!");
-		next.addActionListener(new ButtonListener());
+		next.addActionListener(new NextListener());
 		
 		// Add the 2 panels and 2 buttons 
 		panel.add(panelName);
@@ -108,9 +111,15 @@ public class GameControlPanel extends JPanel {
 		return panel;
 	}
 	
-	private class ButtonListener implements ActionListener {
+	private class NextListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			gameInstance.processNext(currPlayer);
+		}
+	}
+	
+	private class AccusationListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			ClueGame.accusation.setVisibilityTrue();
 		}
 	}
 	
