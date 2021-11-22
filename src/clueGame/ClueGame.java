@@ -283,8 +283,11 @@ public class ClueGame extends JFrame {
 				suggestion.setVisible(false);
 				Card disprove = board.handleSuggestion(getRoom(), getPerson(), getWeapon(), human, gameControl);
 				
-				human.updateSeen(disprove);
-				cardPanel.updateSeen(human.getSeen());
+				if(disprove != null) {
+					human.updateSeen(disprove);
+					cardPanel.updateSeen(human.getSeen());
+				}
+				
 			}
 		}
 		
