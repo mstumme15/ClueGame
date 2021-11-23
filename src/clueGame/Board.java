@@ -472,6 +472,7 @@ public class Board extends JPanel{
 				player.setRow(suggestingPlayer.getRow());
 				player.setMoved(true);
 				repaint();
+				break;
 			}
 		}
 
