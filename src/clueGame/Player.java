@@ -93,9 +93,7 @@ public abstract class Player{
 		colorMap.put("Pink", Color.PINK);
 		colorMap.put("Orange", Color.ORANGE);
 		
-		
 		((Graphics2D) g).setStroke(new BasicStroke(2)); // Changes the stroke width of circle
-		
 		
 		// Draw the circle and fill with appropriate color
 		g.setColor(Color.BLACK);

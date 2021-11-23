@@ -17,7 +17,9 @@ import org.junit.jupiter.api.Test;
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
+import clueGame.ClueGame;
 import clueGame.ComputerPlayer;
+import clueGame.GameControlPanel;
 import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
@@ -122,6 +124,8 @@ class GameSolutionTest {
 		Player mike = new HumanPlayer("Mike", "Blue", 17, 0);
 		Player emily = new ComputerPlayer("Emily", "Red", 3, 0);
 		Player joel = new ComputerPlayer("Joel", "Green", 20, 0);
+		ClueGame testInstance = new ClueGame();
+		testInstance.processNext(mike);
 		players.add(mike);
 		players.add(emily);
 		players.add(joel);
@@ -141,19 +145,19 @@ class GameSolutionTest {
 		board.setPlayers(players);
 		
 		//Testing no matches
-		Card answer = board.handleSuggestion(sunRoomCard, ameliaCard, ropeCard, mike);
+		Card answer = board.handleSuggestion(sunRoomCard, ameliaCard, ropeCard, mike, new GameControlPanel(testInstance));
 		assertEquals(null, answer);
 		
 		//Testing accusing player
-		answer = board.handleSuggestion(bedroomCard, ameliaCard, ropeCard, mike);
+		answer = board.handleSuggestion(bedroomCard, ameliaCard, ropeCard, mike, new GameControlPanel(testInstance));
 		assertEquals(null, answer);
 		
 		//Testing human player
-		answer = board.handleSuggestion(bedroomCard, ameliaCard, ropeCard, emily);
+		answer = board.handleSuggestion(bedroomCard, ameliaCard, ropeCard, emily, new GameControlPanel(testInstance));
 		assertEquals(bedroomCard, answer);
 		
 		//Test when multiple can disprove
-		answer = board.handleSuggestion(theaterCard, emmaCard, pistolCard, mike);
+		answer = board.handleSuggestion(theaterCard, emmaCard, pistolCard, mike, new GameControlPanel(testInstance));
 		assertEquals(emmaCard, answer);
 		
 	}
