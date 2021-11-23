@@ -21,6 +21,7 @@ public class BoardCell {
 	private char secretPassage;
 	private Set<BoardCell> adjList;
 	private boolean highlight;
+	private int numPlayers;
 
 	private boolean occupied = false;
 	
@@ -29,6 +30,7 @@ public class BoardCell {
 	public BoardCell() {
 		super();
 		adjList = new HashSet<BoardCell>();
+		numPlayers = 0;
 		secretPassage = '0';
 	}
 	
@@ -202,4 +204,15 @@ public class BoardCell {
 	public boolean isHighlighted() {
 		return highlight;
 	}
+
+	public int getNumPlayers() {
+		return numPlayers;
+	}
+
+	public void setNumPlayers(int numPlayers) {
+		this.numPlayers = numPlayers;
+	}
+	
+	
+	
 }

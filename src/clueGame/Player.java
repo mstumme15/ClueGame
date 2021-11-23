@@ -84,7 +84,7 @@ public abstract class Player{
 	}
 	
 	// Draws the players on the board based off their location
-	public void draw(Graphics g, int cellWidth, int cellHeight) {
+	public void draw(Graphics g, int cellWidth, int cellHeight, int offset) {
 		// Add colors to color map
 		colorMap.put("Blue", Color.BLUE);
 		colorMap.put("Green", Color.GREEN);
@@ -97,9 +97,9 @@ public abstract class Player{
 		
 		// Draw the circle and fill with appropriate color
 		g.setColor(Color.BLACK);
-		g.drawOval(cellWidth*column, cellHeight*row, cellWidth, cellHeight);
+		g.drawOval(cellWidth*column + (offset*cellWidth)/2, cellHeight*row, cellWidth, cellHeight);
 		g.setColor(colorMap.get(color));
-		g.fillOval(cellWidth*column, cellHeight*row, cellWidth, cellHeight);
+		g.fillOval(cellWidth*column + (offset*cellWidth)/2, cellHeight*row, cellWidth, cellHeight);
 	}
 	
 	public Color getColor() {

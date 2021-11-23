@@ -545,10 +545,22 @@ public class Board extends JPanel{
 			}
 		}
 
+		int offset = 0;
 		// Draw all of the players on the board
 		for (Player player: players) {
-			player.draw(g, cellWidth, cellHeight);
+			BoardCell playerLocation = grid[player.getRow()][player.getColumn()];
+			playerLocation.setNumPlayers(playerLocation.getNumPlayers() + 1);
+			offset = playerLocation.getNumPlayers()-1;
+			player.draw(g, cellWidth, cellHeight, offset);
 		}
+		
+		// Reset all the offsets to 0
+		for (Player player: players) {
+			BoardCell playerLocation = grid[player.getRow()][player.getColumn()];
+			playerLocation.setNumPlayers(0);
+		}
+		
+		
 	}
 
 	// Resets the tag for all the targets

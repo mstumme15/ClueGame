@@ -146,10 +146,7 @@ public class ClueGame extends JFrame {
 							currPlayer.updateSeen(disprove);
 						}
 					}
-					
-					
 				}
-				currPlayer.getSeen().size();
 			}
 		}
 		else { // If the player hasn't finished their turn, print error message
