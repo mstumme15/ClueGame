@@ -84,6 +84,20 @@ public class BoardCell {
 			
 		}
 		
+		else if(this.getSecretPassage() != '0') {
+			g.setColor(Color.BLACK);
+			g.drawRect(cellXLocation, cellYLocation, cellWidth, cellHeight);
+			if (highlight == true) {
+				g.setColor(Color.CYAN);
+			}
+			else {
+				g.setColor(Color.GRAY);
+			}
+			g.fillRect(cellXLocation+1, cellYLocation+1, cellWidth-2, cellHeight-2);
+			g.setColor(Color.BLACK);
+			g.drawString("S", cellXLocation+cellWidth/2-2, cellYLocation+cellHeight-2);
+		}
+		
 		// Fills rooms in gray
 		else {
 			if (highlight == true) {
